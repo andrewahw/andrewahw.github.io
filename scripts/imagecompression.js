@@ -5,7 +5,7 @@ const simulationDiv = document.getElementById("simulation");
 canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
-import { cornerRadius, button, slider} from "./utils";
+import { cornerRadius, button, slider, drawBackground} from "./utils";
 
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
 var mouseStartPos = [-1,-1]; // updates when mouse pressed, resets when mouse released
@@ -154,16 +154,7 @@ let imageButton = new button([730,400],[140,40],"empty.png",[0,0],[250,218,122,0
 
 function mainLoop() {
 
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-
-    //Draw background (white with rounded corners)
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    ctx.arc(cornerRadius, cornerRadius, cornerRadius,Math.PI, 1.5 * Math.PI);
-    ctx.arc(canvas.width - cornerRadius, cornerRadius, cornerRadius,1.5 * Math.PI, 0);
-    ctx.arc(canvas.width - cornerRadius, canvas.height - cornerRadius, cornerRadius,0, 0.5 * Math.PI);
-    ctx.arc(cornerRadius, canvas.height - cornerRadius, cornerRadius,0.5 * Math.PI, Math.PI);
-    ctx.fill();
+    drawBackground(canvas, ctx, cornerRadius)
 
     //Draw image
     ctx.lineWidth = imageBorder;

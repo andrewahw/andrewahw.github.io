@@ -1,5 +1,17 @@
 export const cornerRadius = 15;
 
+export function drawBackground(canvas, ctx, cornerRadius) {
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.arc(cornerRadius, cornerRadius, cornerRadius,Math.PI, 1.5 * Math.PI);
+    ctx.arc(canvas.width - cornerRadius, cornerRadius, cornerRadius,1.5 * Math.PI, 0);
+    ctx.arc(canvas.width - cornerRadius, canvas.height - cornerRadius, cornerRadius,0, 0.5 * Math.PI);
+    ctx.arc(cornerRadius, canvas.height - cornerRadius, cornerRadius,0.5 * Math.PI, Math.PI);
+    ctx.fill();
+}
+
 export function button(position, dimensions, imgLink, imgDimensions, colour, colourTransition, borderRadius, transition, transitionScale,onClick, onClickArguments) {
 
     this.origPos = position;
@@ -122,7 +134,7 @@ export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,tra
         var currentAnimation = (2 / (1 + Math.exp(-6 * percentTransition))) + 1;
         this.circleRadius = this.circleMinRadius * (currentAnimation * (this.circleScale - 1));
 
-        if(disToCircleClick < circleRadius this.sliding == false) { //Check to initiate the sliding
+        if(disToCircleClick < circleRadius && this.sliding == false) { //Check to initiate the sliding
                 this.sliding = true
                 this.circlePrevX = this.circleX;
         }
