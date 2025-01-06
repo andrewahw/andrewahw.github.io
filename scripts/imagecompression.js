@@ -175,9 +175,10 @@ function mainLoop() {
     ctx.putImageData(outputImageData,canvas.width - xPadding - 256, yPadding);
 
     //Mini background
-    /*ctx.fillStyle = "rgba(212, 235, 248, 0.8)";
+    ctx.fillStyle = "rgba(212, 235, 248, 0.8)";
+    ctx.beginPath()
     ctx.rect(0,350,canvas.width, canvas.height);
-    ctx.fill();*/
+    ctx.fill();
 
     //Manage sliders
     ctx.font = "18px Arial";
