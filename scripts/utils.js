@@ -1,3 +1,5 @@
+//UI related
+
 export const cornerRadius = 15;
 
 export function drawBackground(canvas, ctx, cornerRadius) {
@@ -159,4 +161,70 @@ export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,tra
         ctx.arc(this.circleX,this.pos[1],this.circleRadius,0, Math.PI * 2);
         ctx.fill();
     }
+}
+
+//DFT/Complex related
+export function complex(cartesian, polar) {
+
+    this.re = 0;
+    this.im = 0;
+    this.mod = 0;
+    this.arg = 0;
+
+    if(polar == -1) {
+        this.re = cartesian[0];
+        this.im = cartesian[1];
+        this.mod = (this.re * this.re) + (this.im * this.im);
+        this.arg = Math.atan2(this.im, this.re);
+    }
+    else if(cartesian == -1) {
+        this.mod = polar[0];
+        this.arg = polar[1];
+        this.re = this.mod * Math.cos(this.arg);
+        this.im = this.mod * Math.sin(this.arg);
+    }
+
+    //Updates modulus/argument ("cartesian" or "polar")
+    this.updateVars = function(update) {
+        if(update = "cartesian") {
+            this.re = this.mod * Math.cos(this.arg);
+            this.im = this.mod * Math.sin(this.arg);
+        }
+        else if(update = "polar") {
+            this.mod = (this.re * this.re) + (this.im * this.im);
+            this.arg = Math.atan2(this.im, this.re);            
+        }
+    }
+
+}
+
+export function multComplex(complex1, complex2) {
+    var complexResult = new complex(
+        (complex1.re * complex2.re) - (complex1.im * complex2.im),
+        (complex1.re * complex2.im) + (complex2.re * complex1.im)
+    )
+    return complexResult;
+}
+export function addComplex(complex1, complex2) {
+    var complexResult = new complex(
+        complex1.re + complex2.re,
+        complex1.im + complex2.im
+    )
+    return complexResult;
+}
+
+export function DFT(samples) {
+    var frequencies = []
+    var sampleLen = samples.length
+    for(var i = 0; i < sampleLen; i++) {
+        var currentFrequencyReal = 0
+        var currentFrequencyImag = 0
+        for(var j = 0; j < sampleLen; j++)
+        {
+            currentFrequencyReal += samples[j] * Math.cos(Math.PI * 2 * (i * j / sampleLen))
+            currentFrequencyImag += samples[j] * -Math.sin(Math.PI * 2 * (i * j / sampleLen))
+        }
+        frequencies[i] = new complex([currentFrequencyReal,currentFrequencyImag],-1)
+    }
+    return frequencies
 }

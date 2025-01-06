@@ -5,7 +5,7 @@ const simulationDiv = document.getElementById("simulation");
 canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
-import { cornerRadius, button, drawBackground} from "./utils.js";
+import { cornerRadius, button, drawBackground } from "./utils.js";
 
 var mousePos = [-1,-1];
 var mouseStartPos = [-1,-1];
