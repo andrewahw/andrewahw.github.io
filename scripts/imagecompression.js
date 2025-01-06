@@ -131,6 +131,10 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
             chunkSize,chunkSize
         )
 
+        console.log(i)
+        console.log((i % numOfChunkRows))
+        console.log(Math.floor(i / numOfChunkRows))
+
         //Output transformed chunk
         ctx.putImageData(chunkData,
             outImagePos[0] + ((i % numOfChunkRows) * chunkSize),
