@@ -182,10 +182,10 @@ function mainLoop() {
     ctx.fillText("% Frequencies",frequencySlider.pos[0],frequencySlider.pos[1] - 20);
     ctx.fillText("Chunk Size",chunkSlider.pos[0],chunkSlider.pos[1] - 20);
 
-    frequencySlider.sliderLoop(mousePos,mouseStartPos,mouseDown,prevMouseDown);
-    frequencySlider.sliderDraw(mousePos,mouseStartPos,mouseDown,prevMouseDown);
-    chunkSlider.sliderLoop(ctx);
-    chunkSlider.sliderDraw(ctx);
+    frequencySlider.sliderLoop();
+    frequencySlider.sliderDraw();
+    chunkSlider.sliderLoop();
+    chunkSlider.sliderDraw();
 
     //Manage buttons
     runButton.buttonLoop(mousePos,mouseDown,prevMouseDown);
