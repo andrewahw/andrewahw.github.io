@@ -177,5 +177,7 @@ export function mouse(div) {
         if(this.down == true && this.prevDown == false) {this.startPos = this.pos}
         else if(this.down == false) {this.startPos = [-1,-1]}
         this.prevDown = this.down;
+
+        console.log(this.pos)
     }
 }
