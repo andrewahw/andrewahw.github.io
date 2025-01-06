@@ -5,7 +5,7 @@ const simulationDiv = document.getElementById("simulation");
 canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
-import { cornerRadius, button, slider, drawBackground} from "./utils";
+import { cornerRadius, button, slider, drawBackground } from "./utils.js";
 
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
 var mouseStartPos = [-1,-1]; // updates when mouse pressed, resets when mouse released
