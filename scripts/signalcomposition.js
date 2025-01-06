@@ -5,21 +5,13 @@ const simulationDiv = document.getElementById("simulation");
 canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
-import { cornerRadius, button, drawBackground } from "./utils.js";
+import { cornerRadius, button, drawBackground, mouse } from "./utils.js";
 
-var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
-var mouseStartPos = [-1,-1]; // updates when mouse pressed, resets when mouse released
-var mouseDown = false;
-var prevMouseDown = false;
+var m = new mouse(simulationDiv);
+// m is just an abbreviation of mouse (because I'm using it alot)
 
 const maxAngFreq = 4.5;
 const minAngFreq = 0.085
-
-//Event listners for mouse motion
-simulationDiv.addEventListener("mousemove",function(event) {mousePos = [event.offsetX, event.offsetY];});
-simulationDiv.addEventListener("mouseleave",function() {mousePos = [-1, -1]; mouseDown = false; prevMouseDown = false;});
-simulationDiv.addEventListener("mousedown",function() {mouseDown = true;});
-simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 
 //Buttons!
 const buttonList = [
@@ -127,7 +119,7 @@ function mainLoop() {
 
         let b = buttonList[i];
         if(currentWave + 3 == i || preset == i) {b.currentTransition = b.maxTransition + 1} //check to highlight button
-        b.buttonLoop(mousePos, mouseDown, prevMouseDown);
+        b.buttonLoop(m.pos, m.down, m.down);
         b.buttonDraw(ctx);
     }
 
@@ -156,29 +148,29 @@ function mainLoop() {
     }
 
     //Wave/mouse updating
-    if(mouseDown == true && prevMouseDown == false
-        && mousePos[0] < (canvas.width - xPadding) && mousePos[0] > xPadding
-        && mousePos[1] < yPadding + yAxisHeight && mousePos[1] > yPadding
+    if(m.down == true && m.prevDown == false
+        && m.pos[0] < (canvas.width - xPadding) && m.pos[0] > xPadding
+        && m.pos[1] < yPadding + yAxisHeight && m.pos[1] > yPadding
         && currentWave > 0)
     {
-        mouseStartPos = [mousePos[0],mousePos[1]]
+        m.startPos = [m.pos[0],m.pos[1]]
         waveParametersToEdit = [waveList[currentWave].amplitude, waveList[currentWave].angularFrequency, waveList[currentWave].phase]
     }
-    if(mouseDown == false) {mouseStartPos = [-1, -1]}
-    if(mouseStartPos[0] < (canvas.width - xPadding) && mouseStartPos[0] > xPadding
-    && mouseStartPos[1] < yPadding + yAxisHeight && mouseStartPos[1] > yPadding
-    && currentWave > 0 && mouseDown == true && prevMouseDown == true)
+    if(m.down == false) {m.startPos = [-1, -1]}
+    if(m.startPos[0] < (canvas.width - xPadding) && m.startPos[0] > xPadding
+    && m.startPos[1] < yPadding + yAxisHeight && m.startPos[1] > yPadding
+    && currentWave > 0 && m.down == true && m.prevDown == true)
     {
         preset = -1
         var mouseRel = [
-            mousePos[0] - mouseStartPos[0],
-            mousePos[1] - mouseStartPos[1]
+            m.pos[0] - m.startPos[0],
+            m.pos[1] - m.startPos[1]
         ]
         var wavePeriod = Math.PI * 2 / (xScale * waveList[currentWave].angularFrequency);
         var percentPeriod = mouseRel[0] / wavePeriod; 
 
         //Update angular frequency and amplitude only if mouse started not near x axis
-        if(mouseStartPos[1] > ((yAxisHeight/2) + yPadding + 15) || mouseStartPos[1] < ((yAxisHeight/2) + yPadding - 15)) {
+        if(m.startPos[1] > ((yAxisHeight/2) + yPadding + 15) || m.startPos[1] < ((yAxisHeight/2) + yPadding - 15)) {
 
             //Update amplitude
             var vertNormalisedMouseRel = mouseRel[1] / (yAxisHeight / 2) // normalised section of vertical mouse rel
@@ -186,7 +178,7 @@ function mainLoop() {
 
             //Update frequency
             if(percentPeriod != 0) {
-                waveList[currentWave].angularFrequency = Math.max(Math.min(waveParametersToEdit[1] / (mousePos[0] / mouseStartPos[0]),maxAngFreq),minAngFreq);
+                waveList[currentWave].angularFrequency = Math.max(Math.min(waveParametersToEdit[1] / (m.pos[0] / m.startPos[0]),maxAngFreq),minAngFreq);
             }
 
         }
@@ -197,7 +189,7 @@ function mainLoop() {
     }
 
     //mouse updating
-    prevMouseDown = mouseDown;
+    m.mouseLoop();
 }
 
 window.setInterval(mainLoop,15);

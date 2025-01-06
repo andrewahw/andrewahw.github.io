@@ -16,12 +16,11 @@ const imageBorder = 6;
 const xPadding = 80
 const yPadding = 50
 
-//note: the functions start with m instead of mouse because then there would be overlap with function and variable names
-//also not sure if I can import these
-function mMove(event) {mousePos = [event.offsetX, event.offsetY];}
-function mExit() {mousePos = [-1, -1]; mouseDown = false; prevMouseDown = false;}
-function mDown() {mouseDown = true;}
-function mUp() {mouseDown = false;}
+//Event listners for mouse motion
+simulationDiv.addEventListener("mousemove",function(event) {mousePos = [event.offsetX, event.offsetY];});
+simulationDiv.addEventListener("mouseleave",function() {mousePos = [-1, -1]; mouseDown = false; prevMouseDown = false;});
+simulationDiv.addEventListener("mousedown",function() {mouseDown = true;});
+simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 
 //DFT and related
 function complex(cartesian, polar) {
