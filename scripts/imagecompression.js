@@ -5,7 +5,13 @@ const simulationDiv = document.getElementById("simulation");
 canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
-import { cornerRadius, button, slider, drawBackground, complex, multComplex, addComplex, DFT} from "./utils.js";
+import { cornerRadius, button, slider, drawBackground, complex, multComplex, addComplex, DFT, inverseDFT, dftTestInputs} from "./utils.js";
+
+//testing the inverse dft
+for(var i = 0; i < dftTestInputs.length; i++) {
+    var frequencies = DFT(dftTestInputs[i])
+    console.log(inverseDFT(frequencies))
+}
 
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
 var mouseStartPos = [-1,-1]; // updates when mouse pressed, resets when mouse released
@@ -22,34 +28,10 @@ simulationDiv.addEventListener("mouseleave",function() {mousePos = [-1, -1]; mou
 simulationDiv.addEventListener("mousedown",function() {mouseDown = true;});
 simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 
-const dftTestInputs = [
-    [0, -6, -1, -10, 8],
-    [-7, 7, -9, 6, 3, -10],
-    [5, 4, 10, -6, -3, 9, 10],
-    [0, 0, -6, -1, 4, -10, -9, -2],
-    [5, 4, 1, 0, -9, 7, -5, 8, 9],
-    [-2, 6, 4, 2, -10, 1, 2, -5, -3, -1],
-    [2, 4, -3, 2, -7, 0, 0, -7, 3, -8, 3],
-    [2, -4, 10, 5, 0, -8, 8, 10, -3, 0, -4, -5],
-    [-2, 3, 6, 10, 10, -2, -6, -8, -2, -1, 10, -3, -6],
-    [-5, 3, 2, -4, -4, 3, 10, -1, -7, 3, 3, 5, 1, -6]
-]
-
-console.log(DFT(dftTestInputs[0]))
-
-//Setting up images
-let imageNo = 0
-const numOfImages = 5
-let imageObjects = []
-for(var i = 0; i < numOfImages; i++) {
-    imageObjects[i] = new Image()
-    imageObjects[i].src = "../images/imagecompress " + (i + 1).toString() + ".png"
-}
-let outputImageData = ctx.createImageData(256,256);
-
 //Button functions
 function cycleImage() {imageNo = (imageNo + 1) % numOfImages;}
 
+let outputImageData = ctx.createImageData(256,256);
 function imageCompress(argumentArray) { //Note: only works with square image of size 256
     const inpImagePos = argumentArray[0]
     const outImagePos = argumentArray[1]
@@ -60,17 +42,21 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
 
     //Basically do everything
     let chunkData = ctx.createImageData(chunkSize,chunkSize)
+    let samples = []
     for(var i = 0; i < Math.pow(numOfChunkRows,2); i++){
 
+        //Getting input chunk
         chunkData = ctx.getImageData(
             inpImagePos[0] + ((i % numOfChunkRows) * chunkSize),
             inpImagePos[1] + (Math.floor(i / numOfChunkRows) * chunkSize),
             chunkSize,chunkSize
         )
 
-        console.log(i)
-        console.log((i % numOfChunkRows))
-        console.log(Math.floor(i / numOfChunkRows))
+        //Performing the DFT
+        for(var i = 0; i < Math.pow(chunkSize, 2); i++) {
+            samples[i] = chunkData.data[i * 4] //since rgb is same as grayscale, can sample any
+        }
+
 
         //Output transformed chunk
         ctx.putImageData(chunkData,

@@ -219,8 +219,7 @@ export function DFT(samples) {
     for(var i = 0; i < sampleLen; i++) {
         var currentFrequencyReal = 0
         var currentFrequencyImag = 0
-        for(var j = 0; j < sampleLen; j++)
-        {
+        for(var j = 0; j < sampleLen; j++) {
             currentFrequencyReal += samples[j] * Math.cos(Math.PI * 2 * (i * j / sampleLen))
             currentFrequencyImag += samples[j] * -Math.sin(Math.PI * 2 * (i * j / sampleLen))
         }
@@ -228,3 +227,34 @@ export function DFT(samples) {
     }
     return frequencies
 }
+
+export function inverseDFT(complexFrequencies) {
+    var samples = []
+    var sampleLen = complexFrequencies.length
+    for(var i = 0; i < sampleLen; i++) {
+        var currentSampleReal = 0
+        var currentSampleImag = 0
+        for(var j = 0; j < sampleLen; j++) {
+            var multiplication = multComplex(complexFrequencies,
+                new complex(-1, [1,Math.PI * 2 * i * k / sampleLen])
+            )
+            currentSampleReal += multiplication.re
+            currentSampleImag += multiplication.im
+        }
+        samples[i] = Math.sqrt(Math.pow(currentSampleReal,2) + Math.pow(currentSampleImag,2))
+    }
+    return samples
+}
+
+export const dftTestInputs = [ //Just for testing
+    [0, -6, -1, -10, 8],
+    [-7, 7, -9, 6, 3, -10],
+    [5, 4, 10, -6, -3, 9, 10],
+    [0, 0, -6, -1, 4, -10, -9, -2],
+    [5, 4, 1, 0, -9, 7, -5, 8, 9],
+    [-2, 6, 4, 2, -10, 1, 2, -5, -3, -1],
+    [2, 4, -3, 2, -7, 0, 0, -7, 3, -8, 3],
+    [2, -4, 10, 5, 0, -8, 8, 10, -3, 0, -4, -5],
+    [-2, 3, 6, 10, 10, -2, -6, -8, -2, -1, 10, -3, -6],
+    [-5, 3, 2, -4, -4, 3, 10, -1, -7, 3, 3, 5, 1, -6]
+]
