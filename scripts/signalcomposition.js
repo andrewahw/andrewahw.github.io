@@ -15,17 +15,11 @@ var prevMouseDown = false;
 const maxAngFreq = 4.5;
 const minAngFreq = 0.085
 
-//note: the functions start with m instead of mouse because then there would be overlap with function and variable names
-function mMove(event) {mousePos = [event.offsetX, event.offsetY];}
-function mExit() {mousePos = [-1, -1]; mouseDown = false; prevMouseDown = false;}
-function mDown() {mouseDown = true;}
-function mUp() {mouseDown = false;}
-
-//Event listners
-simulationDiv.addEventListener("onmousemove",mMove);
-simulationDiv.addEventListener("onmouseleave",mExit);
-simulationDiv.addEventListener("onmousedown",mDown);
-simulationDiv.addEventListener("onmouseup",mouseUp);
+//Event listners for mouse motion
+simulationDiv.addEventListener("onmousemove",function(event) {mousePos = [event.offsetX, event.offsetY];});
+simulationDiv.addEventListener("onmouseleave",function() {mousePos = [-1, -1]; mouseDown = false; prevMouseDown = false;});
+simulationDiv.addEventListener("onmousedown",function() {mouseDown = true;});
+simulationDiv.addEventListener("onmouseup",function() {mouseDown = false;});
 
 //Buttons!
 const buttonList = [
