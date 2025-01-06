@@ -5,12 +5,13 @@ const simulationDiv = document.getElementById("simulation");
 canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
+import { cornerRadius } from "./utils";
+
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
 var mouseStartPos = [-1,-1]; // updates when mouse pressed, resets when mouse released
 var mouseDown = false;
 var prevMouseDown = false;
 
-const cornerRadius = 15;
 const imageBorder = 6;
 const xPadding = 80
 const yPadding = 50
