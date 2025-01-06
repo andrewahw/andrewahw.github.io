@@ -1,1 +1,0 @@
-export const cornerRadius = 15;
