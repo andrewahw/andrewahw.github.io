@@ -119,22 +119,22 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
     const percentFrequencies = argumentArray[2] //percentage of frequencies to keep
     const chunkSize = argumentArray[3] //size of each chunk in pixels
 
-    const numOfChunks = Math.pow(256 / chunkSize, 2);
+    const numOfChunkRows = 256 / chunkSize;
 
     //Basically do everything
     let chunkData = ctx.createImageData(chunkSize,chunkSize)
-    for(var i = 0; i < numOfChunks; i++){
+    for(var i = 0; i < Math.pow(numOfChunkRows); i++){
 
-        let chunkData = ctx.getImageData(
-            inpImagePos[0] + ((i % (256 / chunkSize)) * chunkSize),
-            inpImagePos[1] + (Math.floor(i / (256 / chunkSize)) * chunkSize),
-            chunkSize - 1,chunkSize - 1
+        chunkData = ctx.getImageData(
+            inpImagePos[0] + ((i % numOfChunkRows) * chunkSize),
+            inpImagePos[1] + (Math.floor(i / numOfChunkRows) * chunkSize),
+            chunkSize,chunkSize
         )
 
         //Output transformed chunk
         ctx.putImageData(chunkData,
-            outImagePos[0] + ((i % chunkSize) * chunkSize),
-            outImagePos[1] + (Math.floor(i / chunkSize) * chunkSize),            
+            outImagePos[0] + ((i % numOfChunkRows) * chunkSize),
+            outImagePos[1] + (Math.floor(i / numOfChunkRows) * chunkSize),           
         )
     }
 
