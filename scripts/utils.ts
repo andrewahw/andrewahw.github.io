@@ -122,8 +122,7 @@ export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,tra
         var currentAnimation = (2 / (1 + Math.exp(-6 * percentTransition))) + 1;
         this.circleRadius = this.circleMinRadius * (currentAnimation * (this.circleScale - 1));
 
-        if(disToCircleClick < circleRadius
-            && mouseStartPos != [-1,-1] && this.sliding == false) { //Check to initiate the sliding
+        if(disToCircleClick < circleRadius this.sliding == false) { //Check to initiate the sliding
                 this.sliding = true
                 this.circlePrevX = this.circleX;
         }
