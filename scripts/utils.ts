@@ -62,7 +62,7 @@ export function button(position, dimensions, imgLink, imgDimensions, colour, col
             + Math.floor(currentColourArray[3] * 255).toString(16)
     }
 
-    this.buttonDraw = function() {
+    this.buttonDraw = function(ctx) {
         ctx.beginPath(); //Main body
         ctx.fillStyle = this.colour;
         ctx.arc(this.pos[0] + this.borderRadius, this.pos[1] + this.borderRadius, this.borderRadius, Math.PI, 1.5 * Math.PI);
