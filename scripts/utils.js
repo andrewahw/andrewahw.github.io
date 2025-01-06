@@ -160,3 +160,10 @@ export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,tra
         ctx.fill();
     }
 }
+
+function mMove(event) {mousePos = [event.offsetX, event.offsetY];}
+function mExit() {mousePos = [-1, -1]; mouseDown = false; prevMouseDown = false;}
+function mDown() {mouseDown = true;}
+function mUp() {mouseDown = false;}
+
+export {mMove, mExit, mDown, mUp}
