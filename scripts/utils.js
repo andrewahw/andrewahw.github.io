@@ -109,7 +109,7 @@ export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,tra
     this.lineColour = lineColour;
     this.circleColour = circleColour;
 
-    this.sliderLoop = function() {
+    this.sliderLoop = function(mousePos, mouseStartPos, mouseDown, prevMouseDown) {
 
         this.output = (this.circleX - this.pos[0]) / this.lineLength;
 
@@ -146,7 +146,7 @@ export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,tra
         if(mouseDown == false) {this.sliding = false}
     }
 
-    this.sliderDraw = function() {
+    this.sliderDraw = function(ctx) {
         ctx.lineWidth = this.lineThickness;
         ctx.strokeStyle = this.lineColour;
         ctx.beginPath();
