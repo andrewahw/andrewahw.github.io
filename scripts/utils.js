@@ -168,7 +168,7 @@ export function mouse(div) {
     this.down = false;
     this.prevDown = false;
 
-    div.addEventListener("mousemove",function(event) {this.pos = [event.offsetX, event.offsetY];});
+    simulationDiv.addEventListener("mousemove",function(event) {this.pos = [event.offsetX, event.offsetY];});
     div.addEventListener("mouseleave",function() {this.pos = [-1, -1]; this.down = false; this.prevDown = false;});
     div.addEventListener("mousedown",function() {this.down = true;});
     div.addEventListener("mouseup",function() {this.down = false;});
