@@ -16,10 +16,10 @@ const maxAngFreq = 4.5;
 const minAngFreq = 0.085
 
 //Event listners for mouse motion
-simulationDiv.addEventListener("onmousemove",function(event) {mousePos = [event.offsetX, event.offsetY];});
-simulationDiv.addEventListener("onmouseleave",function() {mousePos = [-1, -1]; mouseDown = false; prevMouseDown = false;});
-simulationDiv.addEventListener("onmousedown",function() {mouseDown = true;});
-simulationDiv.addEventListener("onmouseup",function() {mouseDown = false;});
+simulationDiv.addEventListener("mousemove",function(event) {mousePos = [event.offsetX, event.offsetY];});
+simulationDiv.addEventListener("mouseleave",function() {mousePos = [-1, -1]; mouseDown = false; prevMouseDown = false;});
+simulationDiv.addEventListener("mousedown",function() {mouseDown = true;});
+simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 
 //Buttons!
 const buttonList = [
