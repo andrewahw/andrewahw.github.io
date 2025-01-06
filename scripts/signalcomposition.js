@@ -12,6 +12,9 @@ var mouseStartPos = [-1,-1]; // updates when mouse pressed, resets when mouse re
 var mouseDown = false;
 var prevMouseDown = false;
 
+const maxAngFreq = 4.5;
+const minAngFreq = 0.085
+
 //note: the functions start with m instead of mouse because then there would be overlap with function and variable names
 function mMove(event) {mousePos = [event.offsetX, event.offsetY];}
 function mExit() {mousePos = [-1, -1]; mouseDown = false; prevMouseDown = false;}
@@ -50,9 +53,6 @@ function mainWave(child1, child2, child3, child4) {
             + this.componentWave3.getY(x) + this.componentWave4.getY(x)
     }
 }
-
-const maxAngFreq = 4.5;
-const minAngFreq = 0.085
 
 let waveList = ["main wave",
     new componentWave(-1, 0.5, 0),
