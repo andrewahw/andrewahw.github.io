@@ -123,7 +123,7 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
 
     //Basically do everything
     let chunkData = ctx.createImageData(chunkSize,chunkSize)
-    for(var i = 0; i < Math.pow(numOfChunkRows); i++){
+    for(var i = 0; i < Math.pow(numOfChunkRows,2); i++){
 
         chunkData = ctx.getImageData(
             inpImagePos[0] + ((i % numOfChunkRows) * chunkSize),
