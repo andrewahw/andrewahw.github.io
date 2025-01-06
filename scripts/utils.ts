@@ -25,7 +25,7 @@ export function button(position, dimensions, imgLink, imgDimensions, colour, col
     this.maxTransition = transition;
     this.transitionMaxScale = transitionScale;
 
-    this.buttonLoop = function() {
+    this.buttonLoop = function(mousePos, mouseDown, prevMouseDown) {
         
         //Mouse user handling
         if(mousePos[0] > this.pos[0] && mousePos[0] < (this.pos[0] + this.dim[0])

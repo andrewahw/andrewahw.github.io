@@ -136,7 +136,7 @@ function mainLoop() {
 
         let b = buttonList[i];
         if(currentWave + 3 == i || preset == i) {b.currentTransition = b.maxTransition + 1} //check to highlight button
-        b.buttonLoop();
+        b.buttonLoop(mousePos, mouseDown, prevMouseDown);
         b.buttonDraw();
     }
 
