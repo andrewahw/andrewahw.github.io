@@ -7,7 +7,8 @@ canvas.height = simulationDiv.clientHeight;
 
 import { cornerRadius, button, drawBackground, mouse } from "./utils.js";
 
-var m = new mouse(simulationDiv);
+var m = new mouse();
+m.addListeners(simulationDiv);
 // m is just an abbreviation of mouse (because I'm using it alot)
 
 const maxAngFreq = 4.5;
