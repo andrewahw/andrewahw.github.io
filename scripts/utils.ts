@@ -75,3 +75,77 @@ export function button(position, dimensions, imgLink, imgDimensions, colour, col
             this.pos[1] + ((this.dim[1] - this.imageDim[1]) / 2),this.imageDim[0],this.imageDim[1]);
     }
 }
+
+export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,transition, lineColour, circleColour) {
+
+    this.pos = pos;
+    this.lineLength = lineLength;
+    this.lineThickness = lineThickness;
+
+    this.circleX = this.pos[0]
+    this.circlePrevX = this.pos[0]
+    this.circleRadius = circleRadius;
+    this.circleMinRadius = circleRadius;
+    this.circleScale = circleScale
+
+    this.output = 0; //clamped between 0 and 1
+
+    this.currentTransition = 0;
+    this.maxTransition = transition;
+    this.sliding = false
+
+    this.lineColour = lineColour;
+    this.circleColour = circleColour;
+
+    this.sliderLoop = function(mousePos, mouseStartPos, mouseDown, prevMouseDown) {
+
+        this.output = (this.circleX - this.pos[0]) / this.lineLength;
+
+        //Calculate distances
+        var disToCircleClick = Math.sqrt(
+            Math.pow(mouseStartPos[0] - this.circleX,2) + 
+            Math.pow(mouseStartPos[1] - this.pos[1],2)
+        )
+        var disToCircleCurrent = Math.sqrt(
+            Math.pow(mousePos[0] - this.circleX,2) + 
+            Math.pow(mousePos[1] - this.pos[1],2)
+        )
+
+        //Animation on user hover
+        if(disToCircleCurrent < circleRadius) {
+            this.currentTransition = Math.min(this.currentTransition + 1, this.maxTransition);
+        }
+        else {
+            this.currentTransition = Math.max(this.currentTransition - 1, 0);
+        }
+        var percentTransition = this.currentTransition / this.maxTransition;
+        var currentAnimation = (2 / (1 + Math.exp(-6 * percentTransition))) + 1;
+        this.circleRadius = this.circleMinRadius * (currentAnimation * (this.circleScale - 1));
+
+        if(disToCircleClick < circleRadius
+            && mouseStartPos != [-1,-1] && this.sliding == false) { //Check to initiate the sliding
+                this.sliding = true
+                this.circlePrevX = this.circleX;
+        }
+        if(mouseDown == true && prevMouseDown == true && this.sliding == true) { //Slide
+            this.circleRadius = this.circleMinRadius * this.circleScale
+            this.circleX = this.circlePrevX + (mousePos[0] - mouseStartPos[0]) //update circle
+            this.circleX = Math.max(Math.min(this.circleX, this.pos[0] + this.lineLength), this.pos[0]) // clamp circle
+        }
+        if(mouseDown == false) {this.sliding = false}
+    }
+
+    this.sliderDraw = function(ctx) {
+        ctx.lineWidth = this.lineThickness;
+        ctx.strokeStyle = this.lineColour;
+        ctx.beginPath();
+        ctx.moveTo(this.pos[0],this.pos[1]);
+        ctx.lineTo(this.pos[0] + this.lineLength, this.pos[1])
+        ctx.stroke();
+
+        ctx.fillStyle = circleColour;
+        ctx.beginPath();
+        ctx.arc(this.circleX,this.pos[1],this.circleRadius,0, Math.PI * 2);
+        ctx.fill();
+    }
+}
