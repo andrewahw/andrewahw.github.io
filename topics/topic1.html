@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+
+    <title>What is Fourier Analysis?</title>
+    <link rel="stylesheet" type="text/css" href="../styles/topictemplate.css">
+
+  </head>
+
+  <body>
+
+    <div id = "backgroundCircle"> 
+
+      <div id = "banner"> <!--Banner-->
+        <a href="../index.html#under"> <button id = "bannerButton">Contents & About</button> </a>
+      </div>
+    
+      <div id = "text"> <!--Main text-->
+        <div id = "title"> <h1>What is Fourier Analysis?</h1> </div>
+        <p><i>"Fourier analysis is the study of the way general functions may be represented or approximated by sums of simpler trigonometric functions."</i><br> - Wikipedia<p>
+        <p>In easier terms, Fourier analysis covers how signals can be decomposed into <b>a sum of individual sine and/or cosine waves.</b>
+           These signals can represent anything from sound, the distribution of temperature of an object, or even the position of an object over time.</p>
+           <img src="../images/wave decomposition.png" style="width:100%; height:40%; border-radius:10px;border:4px solid #1f509a1f;">
+        <p><i>The image above shows how a signal (at the top) can be broken down into a sum of 3 different sines and cosine waves.</i></p>
+        <p>Formally, this process of decomposition is called a <b>Fourier Transform</b>, which "transforms" the <b>time domain</b> of a function into a <b>frequency domain</b>. The inverse of this is either called <b>Fourier Synthesis</b> or (intuitively) the <b>Inverse Fourier Transform.</b></p>
+        <details>
+          <summary class = "collapsibleTitle">What are time/frequency domains?</summary> <!--Collapsible-->
+          <div class = "collapsibleContent">
+            <p>For any function, a domain refers to <b>what inputs the function can take.</b>
+               For example, a function that adds up all the integers from 0 up to a given number will have the domain of the positive integers.</p>
+            <p>In our case of a time and frequency domain, <b>we can imagine our signal as a function</b> that returns the height of a point that follows the signal at any given time.
+               This is the <b>time domain of our function</b>, as we input the time and it outputs the height the point based on our signal.</p> 
+            <p>When we perform a Fourier transform, we create a new function based on this signal that outputs the amplitude of a component wave given the frequency of that component wave.
+               We call this the <b>frequency domain of our original function</b>, as we are now inputting frequencies instead of our original time domain.</p>
+          </div>
+        </details> 
+        <p>Practically, there are many different methods of performing a Fourier transform, of which we'll cover the <b>Discrete Fourier Transform.</b>
+           This allows individual samples to be turned into waves, which allows it to be used more practically.</p>
+        <p>To see the versatility of Fourier Analysis, you can play around with the different component waves in the simulation on the right.</p>
+      </div>
+
+      <div id = "simulation" onmousemove = "mMove(event)" onmouseleave="mExit()" onmousedown="mDown()" onmouseup="mUp()"> <!--Simulation-->
+        <noscript>
+          <p> This website requires Javascript to function properly :(</p>
+        </noscript>
+        <canvas id = "simulationCanvas" width = 100% height = 100%></canvas>
+        <script src = "../scripts/signalcomposition.js" > </script>
+      </div>
+
+      <div id = "simulationInstructions"> <!--Simulation instructions-->
+        <div id = "instructionsHeader"> <h2> Instructions </h2> </div>
+        <div id = "instructionsText">
+          <p>NEED TO DO!!!</p>
+        </div>
+      </div>
+
+      <!--Next/prev buttons-->
+      <a href="topic2.html"> <button id = "nextButton">Next Page</button> </a>
+      <a href="../index.html"> <button id = "prevButton">Previous Page</button> </a>
+
+    </div>
+
+  </body>
+</html>
