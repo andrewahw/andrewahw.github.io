@@ -5,14 +5,7 @@ const simulationDiv = document.getElementById("simulation");
 canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
-import { cornerRadius, button, slider, drawBackground, DFT, inverseDFT, dftTestInputs} from "./utils.js";
-
-//testing the inverse dft
-for(var i = 0; i < dftTestInputs.length; i++) {
-    console.log(dftTestInputs[i])
-    var frequencies = DFT(dftTestInputs[i])
-    console.log(inverseDFT(frequencies))
-}
+import { cornerRadius, button, slider, drawBackground, DFT, inverseDFT, complex} from "./utils.js";
 
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
 var mouseStartPos = [-1,-1]; // updates when mouse pressed, resets when mouse released
@@ -49,10 +42,12 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
     const chunkSize = argumentArray[3] //size of each chunk in pixels
 
     const numOfChunkRows = 256 / chunkSize;
+    const numOfFrequencies = Min(Math.floor(Math.pow(chunkSize, 2) * percentFrequencies), 1);
 
     //Basically do everything
     let chunkData = ctx.createImageData(chunkSize,chunkSize)
     let samples = []
+    let frequencies = []
     for(var i = 0; i < Math.pow(numOfChunkRows,2); i++){
 
         //Getting input chunk
@@ -62,11 +57,18 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
             chunkSize,chunkSize
         )
 
-        //Performing the DFT
-        for(var i = 0; i < Math.pow(chunkSize, 2); i++) {
-            samples[i] = chunkData.data[i * 4] //since rgb is same as grayscale, can sample any
+        //Performing the DFT and filtering
+        for(var j = 0; j < Math.pow(chunkSize, 2); j++) {
+            samples[j] = chunkData.data[j * 4] // rgb is same as grayscale, so can sample any channel apart from alpha
         }
-
+        frequencies = DFT(samples)
+        for(var j = numOfFrequencies; j < frequencies.len; j++) { //applying filter
+            frequencies[j] = new complex([0,0],-1)
+        }
+        samples = inverseDFT(frequencies)
+        for(var j = 0; j < chunkData.data.length; j++) {
+            if(j % 4 <= 2) {chunkdData.data[j] = samples[Math.floor(samples / 4)]}
+        }
 
         //Output transformed chunk
         ctx.putImageData(chunkData,
