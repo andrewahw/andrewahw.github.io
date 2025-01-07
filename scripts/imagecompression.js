@@ -138,16 +138,23 @@ function mainLoop() {
 
     //Draw slider text underneath slider and update slider vars
     ctx.textAlign = "center"
-    ctx.font = "16px Arial";
+    ctx.font = "bold 16px Arial";
     frequencyToKeep = frequencySlider.output
-    ctx.fillStyle = "#000000" + (Math.round(255 * frequencySlider.currentTransition / frequencySlider.maxTransition)).toString(16);
-    ctx.fillText((Math.round(frequencyToKeep * 100)).toString(),
-        frequencySlider.circleX,frequencySlider.pos[1] + 50)
+    if(frequencySlider.currentTransition > 0) {
+        ctx.fillStyle = "#000000" + (Math.round(255 * frequencySlider.currentTransition / frequencySlider.maxTransition)).toString(16);
+        ctx.fillText((Math.round(frequencyToKeep * 100)).toString(),
+            frequencySlider.circleX,frequencySlider.pos[1] + 30)
+    }
 
     chunkPixelSize = Math.pow(2,Math.round(chunkSlider.output * 7) + 1);
-    ctx.fillStyle = "#000000" + (Math.round(255 * chunkSlider.currentTransition / chunkSlider.maxTransition)).toString(16);
-    ctx.fillText(chunkPixelSize.toString(),
-        chunkSlider.circleX,frequencySlider.pos[1] + 50)
+    if(chunkSlider.currentTransition > 0) {
+        ctx.fillStyle = "#000000" + (Math.round(255 * chunkSlider.currentTransition / chunkSlider.maxTransition)).toString(16);
+        ctx.fillText(chunkPixelSize.toString(),
+            chunkSlider.circleX,frequencySlider.pos[1] + 30)
+    }
+
+    runButton.argumentArray[2] = frequencyToKeep;
+    runButton.argumentArray[3] = chunkPixelSize;
 
     //Manage buttons
     runButton.buttonLoop(mousePos,mouseDown,prevMouseDown);
@@ -156,7 +163,7 @@ function mainLoop() {
     imageButton.buttonDraw(ctx);
     ctx.font = "18px Arial";
     ctx.fillStyle = "black"
-    ctx.fillText("Change Image",imageButton.origPos[0] + imageButton.origDim[0] * 0.5, imageButton.origPos[1] + 6)
+    ctx.fillText("Change Image",imageButton.origPos[0], imageButton.origPos[1] + 6)
 
     //Mouse updating
     if(mouseDown == true && prevMouseDown == false) {mouseStartPos = mousePos}
