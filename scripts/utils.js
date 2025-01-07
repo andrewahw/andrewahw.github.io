@@ -243,7 +243,9 @@ export function inverseDFT(complexFrequencies) {
             currentSampleImag += multiplication.im
         }
         samples[i] = Math.sqrt(Math.pow(currentSampleReal,2) + Math.pow(currentSampleImag,2)) / sampleLen
-        if(Math.atan2(currentSampleImag, currentSampleReal) != (Math.PI * 2 * i / sampleLen)) {samples[i] *= -1}
+        var intendedArg = Math.PI * 2 * i / sampleLen
+        var sampleArg = Math.atan2(currentSampleImag, currentSampleReal)
+        if((intendedArg - sampleArg) % (Math.PI * 2) > 0.1) {samples[i] *= -1}
     }
     return samples
 }
