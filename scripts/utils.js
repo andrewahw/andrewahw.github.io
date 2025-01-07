@@ -200,15 +200,15 @@ export function complex(cartesian, polar) {
 
 export function multComplex(complex1, complex2) {
     var complexResult = new complex(
-        (complex1.re * complex2.re) - (complex1.im * complex2.im),
-        (complex1.re * complex2.im) + (complex2.re * complex1.im)
+        [(complex1.re * complex2.re) - (complex1.im * complex2.im),
+        (complex1.re * complex2.im) + (complex2.re * complex1.im)],-1
     )
     return complexResult;
 }
 export function addComplex(complex1, complex2) {
     var complexResult = new complex(
-        complex1.re + complex2.re,
-        complex1.im + complex2.im
+        [complex1.re + complex2.re,
+        complex1.im + complex2.im],-1
     )
     return complexResult;
 }
@@ -234,22 +234,15 @@ export function inverseDFT(complexFrequencies) {
     console.log(complexFrequencies)
     for(var i = 0; i < sampleLen; i++) {
 
-        var currentSample = 0
-        for(var j = 0; j < sampleLen; j++) {
-            currentSample += complexFrequencies[i].mod * Math.sin((Math.PI * 2 * i * j / sampleLen) - complexFrequencies[i].arg)
-        }
-        samples[i] = currentSample / sampleLen
-
-        /*var currentSampleReal = 0
+        var currentSampleReal = 0
         var currentSampleImag = 0
         for(var j = 0; j < sampleLen; j++) {
-            var multiplication = multComplex(complexFrequencies[j],
-                new complex(-1, [1,Math.PI * 2 * i * j / sampleLen])
-            )
+            var multiplicand = new complex(-1, [1, Math.PI * 2 * i * j / sampleLen])
+            var multiplication = multComplex(complexFrequencies[j],multiplicand)
             currentSampleReal += multiplication.re
             currentSampleImag += multiplication.im
         }
-        samples[i] = Math.sqrt(Math.pow(currentSampleReal,2) + Math.pow(currentSampleImag,2))*/
+        samples[i] = Math.sqrt(Math.pow(currentSampleReal,2) + Math.pow(currentSampleImag,2)) / sampleLen
     }
     return samples
 }
