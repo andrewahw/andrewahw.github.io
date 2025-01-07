@@ -248,6 +248,39 @@ export function inverseDFT(complexFrequencies) {
     return samples
 }
 
+export function FFT(samples) { //Note: only works when sampleLen is power of 2!!
+    var frequencies = []
+    var sampleLen = samples.length
+    if(sampleLen == 1) { //Base case
+        return [new complex([samples[0], 0], -1)]
+    }
+    else {
+
+        //Splitting into even and odd indexed samples
+        var evenSamples = []
+        var oddSamples = []
+        for(var i = 0; i < sampleLen; i++) {
+            if(i % 2 == 0) {evenSamples[i / 2] = samples[i]}
+            else{oddSamples[(i - 1) / 2] = samples[i]}
+        }
+
+        //Recursive step
+        var evenFreq = FFT(evenSamples)
+        var oddFreq = FFT(oddSamples)
+
+        //Returning final frequencies
+        for(var i = 0; i < sampleLen / 2; i++) {
+            var oddFreqToAdd = multComplex(oddFreq[i], 
+                new complex(-1, [1, Math.PI * -2 * i / sampleLen])
+            )
+            frequencies[i] = addComplex(evenFreq[i], oddFreqToAdd)
+            var oddFreqToSub = multComplex(new complex([-1,0],-1), oddFreqToAdd)
+            frequencies[i + sampleLen / 2] = addComplex(evenFreq[i], oddFreqToSub)
+        }
+        return frequencies
+    }
+}
+
 export const dftTestInputs = [ //Just for testing
     [0, -6, -1, -10, 8],
     [-7, 7, -9, 6, 3, -10],
