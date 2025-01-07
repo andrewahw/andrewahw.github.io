@@ -63,7 +63,7 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
             samples[j] = chunkData.data[j * 4] // rgb is same as grayscale, so can sample any channel apart from alpha
         }
         frequencies = DFT(samples)
-        var mid = frequency.length / 2
+        var mid = frequencies.length / 2
         for(var j = 0; j < numOfFrequencies; j++) { //applying filter
             frequencies[Math.floor(mid) - j] = new complex([0,0],-1)
             frequencies[Math.ceil(mid) + j] = new complex([0,0],-1)
