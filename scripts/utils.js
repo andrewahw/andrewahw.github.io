@@ -236,9 +236,9 @@ export function inverseDFT(complexFrequencies) {
 
         var currentSample = 0
         for(var j = 0; j < sampleLen; j++) {
-            currentSample += complexFrequencies[i].mod * Math.sin((Math.PI * 2 * i * j) - complexFrequencies[i].arg)
+            currentSample += complexFrequencies[i].mod * Math.sin((Math.PI * 2 * i * j / sampleLen) - complexFrequencies[i].arg)
         }
-        samples[i] = currentSample
+        samples[i] = currentSample / sampleLen
 
         /*var currentSampleReal = 0
         var currentSampleImag = 0
