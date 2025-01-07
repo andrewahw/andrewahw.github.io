@@ -100,8 +100,8 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
 let frequencyToKeep = 0.5;
 let chunkPixelSize = 16;
 
-let frequencySlider = new slider([80,410],250,5,10,1.5,15,"rgba(31, 80, 154, 0.5)","rgba(31, 80, 154, 0.9)");
-let chunkSlider = new slider([380,410],250,5,10,1.5,15,"rgba(31, 80, 154, 0.5)","rgba(31, 80, 154, 0.9)");
+let frequencySlider = new slider([80,410],250,5,10,1.5,15,"rgba(31, 80, 154, 0.5)","rgba(31, 80, 154, 0.9)", 0.5);
+let chunkSlider = new slider([380,410],250,5,10,1.5,15,"rgba(31, 80, 154, 0.5)","rgba(31, 80, 154, 0.9)", 0.25);
 let runButton = new button([canvas.width/2,yPadding + 128],
     [120,120],"right arrow.png",[100,100],[0,0,0,0],[0,0,0,0],30,15,1.1,imageCompress,
     [[xPadding,yPadding],[canvas.width - xPadding - 256, yPadding],frequencyToKeep,chunkPixelSize])
@@ -171,7 +171,7 @@ function mainLoop() {
             chunkSlider.circleX,frequencySlider.pos[1] + 35)
     }
 
-    runButton.onClick = function() {onClick(
+    runButton.onClick = function() {imageCompress(
         [[xPadding,yPadding],[canvas.width - xPadding - 256, yPadding],frequencyToKeep,chunkPixelSize]
     );}
 

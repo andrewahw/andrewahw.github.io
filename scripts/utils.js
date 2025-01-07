@@ -90,19 +90,19 @@ export function button(position, dimensions, imgLink, imgDimensions, colour, col
     }
 }
 
-export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,transition, lineColour, circleColour) {
+export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,transition, lineColour, circleColour, defaultOutput) {
 
     this.pos = pos;
     this.lineLength = lineLength;
     this.lineThickness = lineThickness;
 
-    this.circleX = this.pos[0]
-    this.circlePrevX = this.pos[0]
+    this.circleX = this.pos[0] + (this.lineLength * defaultOutput)
+    this.circlePrevX = this.circleX
     this.circleRadius = circleRadius;
     this.circleMinRadius = circleRadius;
     this.circleScale = circleScale
 
-    this.output = 0; //clamped between 0 and 1
+    this.output = defaultOutput; //clamped between 0 and 1
 
     this.currentTransition = 0;
     this.maxTransition = transition;
