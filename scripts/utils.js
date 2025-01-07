@@ -233,7 +233,14 @@ export function inverseDFT(complexFrequencies) {
     var sampleLen = complexFrequencies.length
     console.log(complexFrequencies)
     for(var i = 0; i < sampleLen; i++) {
-        var currentSampleReal = 0
+
+        var currentSample = 0
+        for(var j = 0; j < sampleLen; j++) {
+            currentSample += complexFrequencies[i].mod * Math.sin((Math.PI * 2 * i * j) - complexFrequencies[i].arg)
+        }
+        samples[i] = currentSample
+
+        /*var currentSampleReal = 0
         var currentSampleImag = 0
         for(var j = 0; j < sampleLen; j++) {
             var multiplication = multComplex(complexFrequencies[j],
@@ -242,7 +249,7 @@ export function inverseDFT(complexFrequencies) {
             currentSampleReal += multiplication.re
             currentSampleImag += multiplication.im
         }
-        samples[i] = Math.sqrt(Math.pow(currentSampleReal,2) + Math.pow(currentSampleImag,2))
+        samples[i] = Math.sqrt(Math.pow(currentSampleReal,2) + Math.pow(currentSampleImag,2))*/
     }
     return samples
 }
