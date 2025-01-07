@@ -231,6 +231,7 @@ export function DFT(samples) {
 export function inverseDFT(complexFrequencies) {
     var samples = []
     var sampleLen = complexFrequencies.length
+    console.log(complexFrequencies)
     for(var i = 0; i < sampleLen; i++) {
         var currentSampleReal = 0
         var currentSampleImag = 0
