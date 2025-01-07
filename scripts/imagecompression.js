@@ -42,7 +42,8 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
     const chunkSize = argumentArray[3] //size of each chunk in pixels
 
     const numOfChunkRows = 256 / chunkSize;
-    const numOfFrequencies = Math.min(Math.floor(Math.pow(chunkSize, 2) * percentFrequencies), 1);
+    const numOfFrequencies = Math.round(Math.ceil((Math.pow(chunkSize, 2) - 1) / 2) * (1 - percentFrequencies))
+    //this is actually now number of frequencies to remove
 
     //Basically do everything
     let chunkData = ctx.createImageData(chunkSize,chunkSize)
@@ -62,9 +63,11 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
             samples[j] = chunkData.data[j * 4] // rgb is same as grayscale, so can sample any channel apart from alpha
         }
         frequencies = DFT(samples)
-        /*for(var j = numOfFrequencies; j < frequencies.length; j++) { //applying filter
-            frequencies[j] = new complex([0,0],-1)
-        }*/
+        var mid = frequency.length / 2
+        for(var j = 0; j < numOfFrequencies; j++) { //applying filter
+            frequencies[Math.floor(mid) - j] = new complex([0,0],-1)
+            frequencies[Math.ceil(mid) + j] = new complex([0,0],-1)
+        }
         samples = inverseDFT(frequencies)
         console.log(samples)
         for(var j = 0; j < samples.length; j++) {
