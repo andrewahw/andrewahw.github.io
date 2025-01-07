@@ -143,18 +143,18 @@ function mainLoop() {
     if(frequencySlider.currentTransition > 0) {
         ctx.fillStyle = "#000000" + (Math.round(255 * frequencySlider.currentTransition / frequencySlider.maxTransition)).toString(16);
         ctx.fillText((Math.round(frequencyToKeep * 100)).toString(),
-            frequencySlider.circleX,frequencySlider.pos[1] + 30)
+            frequencySlider.circleX,frequencySlider.pos[1] + 35)
     }
 
     chunkPixelSize = Math.pow(2,Math.round(chunkSlider.output * 7) + 1);
     if(chunkSlider.currentTransition > 0) {
         ctx.fillStyle = "#000000" + (Math.round(255 * chunkSlider.currentTransition / chunkSlider.maxTransition)).toString(16);
         ctx.fillText(chunkPixelSize.toString(),
-            chunkSlider.circleX,frequencySlider.pos[1] + 30)
+            chunkSlider.circleX,frequencySlider.pos[1] + 35)
     }
 
-    runButton.argumentArray[2] = frequencyToKeep;
-    runButton.argumentArray[3] = chunkPixelSize;
+    runButton.onClickArguments[2] = frequencyToKeep;
+    runButton.onClickArguments[3] = chunkPixelSize;
 
     //Manage buttons
     runButton.buttonLoop(mousePos,mouseDown,prevMouseDown);
