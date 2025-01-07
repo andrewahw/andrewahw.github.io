@@ -45,6 +45,12 @@ let outputImageData = ctx.createImageData(256,256);
 function cycleImage() {imageNo = (imageNo + 1) % numOfImages;}
 
 function imageCompress(argumentArray) { //Note: only works with square image of size 256
+
+    //loading
+    ctx.textAlign = "center"
+    ctx.font = "bold 16px Arial";
+    ctx.fillText("Loading...",canvas.width/2,yPadding + 200)
+
     const inpImagePos = argumentArray[0]
     const outImagePos = argumentArray[1]
     const percentFrequencies = argumentArray[2] //percentage of frequencies to keep
@@ -135,8 +141,12 @@ function mainLoop() {
     //#region Background of lower section
 
     ctx.fillStyle = "rgba(212, 235, 248, 0.8)";
-    ctx.beginPath()
-    ctx.rect(0,350,canvas.width, canvas.height);
+
+    ctx.beginPath();
+    ctx.arc(cornerRadius, cornerRadius + 350, cornerRadius,Math.PI, 1.5 * Math.PI);
+    ctx.arc(canvas.width - cornerRadius, cornerRadius + 350, cornerRadius,1.5 * Math.PI, 0);
+    ctx.arc(canvas.width - cornerRadius, canvas.height - cornerRadius, cornerRadius,0, 0.5 * Math.PI);
+    ctx.arc(cornerRadius, canvas.height - cornerRadius, cornerRadius,0.5 * Math.PI, Math.PI);
     ctx.fill();
 
     //#endregion
