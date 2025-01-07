@@ -62,7 +62,7 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
             samples[j] = chunkData.data[j * 4] // rgb is same as grayscale, so can sample any channel apart from alpha
         }
         frequencies = DFT(samples)
-        for(var j = numOfFrequencies; j < frequencies.len; j++) { //applying filter
+        for(var j = numOfFrequencies; j < frequencies.length; j++) { //applying filter
             frequencies[j] = new complex([0,0],-1)
         }
         samples = inverseDFT(frequencies)
@@ -86,7 +86,7 @@ let frequencySlider = new slider([80,410],250,5,10,1.5,15,"rgba(31, 80, 154, 0.5
 let chunkSlider = new slider([380,410],250,5,10,1.5,15,"rgba(31, 80, 154, 0.5)","rgba(31, 80, 154, 0.9)");
 let runButton = new button([canvas.width/2,yPadding + 128],
     [100,100],"right arrow.png",[100,100],[0,0,0,0],[0,0,0,0],25,15,1.1,imageCompress,
-    [[xPadding,yPadding],[canvas.width - xPadding - 256, yPadding],1,8])
+    [[xPadding,yPadding],[canvas.width - xPadding - 256, yPadding],0.5,16])
 let imageButton = new button([730,400],[140,40],"empty.png",[0,0],[250,218,122,0.7],[250,218,122,1],15,15,1.1,cycleImage)
 //rgba(250, 218, 122, 1)
 
