@@ -248,11 +248,12 @@ export function inverseDFT(complexFrequencies) {
     return samples
 }
 
-export function FFT(samples) { //Note: only works when sampleLen is power of 2!!
+export function FFT(samples, inverse = false) { //Note: only works when sampleLen is power of 2!!
     var frequencies = []
     var sampleLen = samples.length
     if(sampleLen == 1) { //Base case
-        return [new complex([samples[0], 0], -1)]
+        if(inverse == false) {return [new complex([samples[0], 0], -1)]}
+        else {return [samples[0]]}
     }
     else {
 
@@ -261,24 +262,40 @@ export function FFT(samples) { //Note: only works when sampleLen is power of 2!!
         var oddSamples = []
         for(var i = 0; i < sampleLen; i++) {
             if(i % 2 == 0) {evenSamples[i / 2] = samples[i]}
-            else{oddSamples[(i - 1) / 2] = samples[i]}
+            else {oddSamples[(i - 1) / 2] = samples[i]}
         }
 
         //Recursive step
-        var evenFreq = FFT(evenSamples)
-        var oddFreq = FFT(oddSamples)
+        var evenFreq = FFT(evenSamples, inverse)
+        var oddFreq = FFT(oddSamples, inverse)
 
         //Returning final frequencies
         for(var i = 0; i < sampleLen / 2; i++) {
-            var oddFreqToAdd = multComplex(oddFreq[i], 
-                new complex(-1, [1, Math.PI * -2 * i / sampleLen])
-            )
-            frequencies[i] = addComplex(evenFreq[i], oddFreqToAdd)
+            if(inverse == false) {
+                var oddFreqToAdd = multComplex(oddFreq[i], 
+                    new complex(-1, [1, Math.PI * -2 * i / sampleLen])
+                )
+            }
+            else {
+                var oddFreqToAdd = multComplex(oddFreq[i], 
+                    new complex(-1, [1, Math.PI * 2 * i / sampleLen])
+                )
+            }
             var oddFreqToSub = multComplex(new complex([-1,0],-1), oddFreqToAdd)
+            frequencies[i] = addComplex(evenFreq[i], oddFreqToAdd)
             frequencies[i + sampleLen / 2] = addComplex(evenFreq[i], oddFreqToSub)
         }
         return frequencies
     }
+}
+
+export function inverseFFT(frequencies) { //Inverse FFT is very similar, so this just uses FFT as baseline
+    var unscaled = FFT(frequencies, true)
+    var samples = []
+    for(var i = 0; i < unscaled.length; i++) {
+        samples[i] = unscaled[i].re / unscaled.length
+    }
+    return samples
 }
 
 export const dftTestInputs = [ //Just for testing

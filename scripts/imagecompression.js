@@ -7,7 +7,7 @@ const simulationDiv = document.getElementById("simulation");
 canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
-import { cornerRadius, button, slider, drawBackground, FFT, inverseDFT, complex} from "./utils.js";
+import { cornerRadius, button, slider, drawBackground, FFT, inverseFFT} from "./utils.js";
 
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
 var mouseStartPos = [-1,-1]; // updates when mouse pressed, resets when mouse released
@@ -46,11 +46,6 @@ function cycleImage() {imageNo = (imageNo + 1) % numOfImages;}
 
 function imageCompress(argumentArray) { //Note: only works with square image of size 256
 
-    //loading
-    ctx.textAlign = "center"
-    ctx.font = "bold 16px Arial";
-    ctx.fillText("Loading...",canvas.width/2,yPadding + 200)
-
     const inpImagePos = argumentArray[0]
     const outImagePos = argumentArray[1]
     const percentFrequencies = argumentArray[2] //percentage of frequencies to keep
@@ -83,8 +78,7 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
             frequencies[Math.floor(mid) - j] = new complex([0,0],-1)
             frequencies[Math.ceil(mid) + j] = new complex([0,0],-1)
         }
-        samples = inverseDFT(frequencies)
-        console.log(samples)
+        samples = inverseFFT(frequencies)
         for(var j = 0; j < samples.length; j++) {
             chunkData.data[(j * 4) + 0] = Math.floor(samples[j])
             chunkData.data[(j * 4) + 1] = Math.floor(samples[j])
@@ -181,9 +175,14 @@ function mainLoop() {
             chunkSlider.circleX,frequencySlider.pos[1] + 35)
     }
 
-    runButton.onClick = function() {imageCompress(
-        [[xPadding,yPadding],[canvas.width - xPadding - 256, yPadding],frequencyToKeep,chunkPixelSize]
-    );}
+    runButton.onClick = function() {
+        //loading
+        ctx.textAlign = "center"
+        ctx.font = "bold 16px Arial";
+        ctx.fillText("Loading...",canvas.width/2,yPadding + 200)
+
+        imageCompress([[xPadding,yPadding],[canvas.width - xPadding - 256, yPadding],frequencyToKeep,chunkPixelSize]);
+    }
 
     //#endregion
 
