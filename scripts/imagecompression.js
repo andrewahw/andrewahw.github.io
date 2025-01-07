@@ -42,7 +42,7 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
     const chunkSize = argumentArray[3] //size of each chunk in pixels
 
     const numOfChunkRows = 256 / chunkSize;
-    const numOfFrequencies = Min(Math.floor(Math.pow(chunkSize, 2) * percentFrequencies), 1);
+    const numOfFrequencies = Math.min(Math.floor(Math.pow(chunkSize, 2) * percentFrequencies), 1);
 
     //Basically do everything
     let chunkData = ctx.createImageData(chunkSize,chunkSize)
