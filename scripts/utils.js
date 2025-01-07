@@ -236,7 +236,7 @@ export function inverseDFT(complexFrequencies) {
         var currentSampleImag = 0
         for(var j = 0; j < sampleLen; j++) {
             var multiplication = multComplex(complexFrequencies,
-                new complex(-1, [1,Math.PI * 2 * i * k / sampleLen])
+                new complex(-1, [1,Math.PI * 2 * i * j / sampleLen])
             )
             currentSampleReal += multiplication.re
             currentSampleImag += multiplication.im
