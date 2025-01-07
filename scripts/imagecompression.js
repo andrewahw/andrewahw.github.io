@@ -5,7 +5,7 @@ const simulationDiv = document.getElementById("simulation");
 canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
-import { cornerRadius, button, slider, drawBackground, complex, multComplex, addComplex, DFT, inverseDFT, dftTestInputs} from "./utils.js";
+import { cornerRadius, button, slider, drawBackground, DFT, inverseDFT, dftTestInputs} from "./utils.js";
 
 //testing the inverse dft
 for(var i = 0; i < dftTestInputs.length; i++) {
@@ -28,10 +28,19 @@ simulationDiv.addEventListener("mouseleave",function() {mousePos = [-1, -1]; mou
 simulationDiv.addEventListener("mousedown",function() {mouseDown = true;});
 simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 
+//Setting up images
+let imageNo = 0
+const numOfImages = 5
+let imageObjects = []
+for(var i = 0; i < numOfImages; i++) {
+    imageObjects[i] = new Image()
+    imageObjects[i].src = "../images/imagecompress " + (i + 1).toString() + ".png"
+}
+let outputImageData = ctx.createImageData(256,256);
+
 //Button functions
 function cycleImage() {imageNo = (imageNo + 1) % numOfImages;}
 
-let outputImageData = ctx.createImageData(256,256);
 function imageCompress(argumentArray) { //Note: only works with square image of size 256
     const inpImagePos = argumentArray[0]
     const outImagePos = argumentArray[1]

@@ -240,6 +240,8 @@ export function inverseDFT(complexFrequencies) {
             )
             currentSampleReal += multiplication.re
             currentSampleImag += multiplication.im
+            console.log(currentSampleReal)
+            console.log(currentSampleImag)
         }
         samples[i] = Math.sqrt(Math.pow(currentSampleReal,2) + Math.pow(currentSampleImag,2))
     }
