@@ -1,3 +1,5 @@
+//#region General setup
+
 const canvas = document.getElementById("simulationCanvas");
 const ctx = canvas.getContext("2d");
 const simulationDiv = document.getElementById("simulation");
@@ -22,7 +24,10 @@ simulationDiv.addEventListener("mouseleave",function() {mousePos = [-1, -1]; mou
 simulationDiv.addEventListener("mousedown",function() {mouseDown = true;});
 simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 
-//Setting up images
+//#endregion
+
+//#region Image setup
+
 let imageNo = 0
 const numOfImages = 5
 let imageObjects = []
@@ -31,6 +36,10 @@ for(var i = 0; i < numOfImages; i++) {
     imageObjects[i].src = "../images/imagecompress " + (i + 1).toString() + ".png"
 }
 let outputImageData = ctx.createImageData(256,256);
+
+//#endregion
+
+//#region UI setup
 
 //Button functions
 function cycleImage() {imageNo = (imageNo + 1) % numOfImages;}
@@ -99,11 +108,14 @@ let runButton = new button([canvas.width/2,yPadding + 128],
 let imageButton = new button([730,400],[140,40],"empty.png",[0,0],[250,218,122,0.7],[250,218,122,1],15,15,1.1,cycleImage)
 //rgba(250, 218, 122, 1)
 
+//#endregion
+
 function mainLoop() {
 
     drawBackground(canvas, ctx, cornerRadius)
 
-    //Draw image
+    //#region Draw images
+
     ctx.lineWidth = imageBorder;
     ctx.strokeStyle = "rgba(31, 80, 154, 0.5)"
     ctx.beginPath();
@@ -118,13 +130,19 @@ function mainLoop() {
     ctx.stroke();
     ctx.putImageData(outputImageData,canvas.width - xPadding - 256, yPadding);
 
-    //Mini background
+    //#endregion
+
+    //#region Background of lower section
+
     ctx.fillStyle = "rgba(212, 235, 248, 0.8)";
     ctx.beginPath()
     ctx.rect(0,350,canvas.width, canvas.height);
     ctx.fill();
 
-    //Manage sliders
+    //#endregion
+
+    //#region Manage sliders
+
     ctx.textAlign = "start"
     ctx.font = "18px Arial";
     ctx.fillStyle = "black";
@@ -153,10 +171,14 @@ function mainLoop() {
             chunkSlider.circleX,frequencySlider.pos[1] + 35)
     }
 
-    runButton.onClickArguments[2] = frequencyToKeep;
-    runButton.onClickArguments[3] = chunkPixelSize;
+    runButton.onClick = function() {onClick(
+        [[xPadding,yPadding],[canvas.width - xPadding - 256, yPadding],frequencyToKeep,chunkPixelSize]
+    );}
 
-    //Manage buttons
+    //#endregion
+
+    //#region Manage buttons
+
     runButton.buttonLoop(mousePos,mouseDown,prevMouseDown);
     imageButton.buttonLoop(mousePos,mouseDown,prevMouseDown);
     runButton.buttonDraw(ctx);
@@ -165,10 +187,15 @@ function mainLoop() {
     ctx.fillStyle = "black"
     ctx.fillText("Change Image",imageButton.origPos[0], imageButton.origPos[1] + 6)
 
-    //Mouse updating
+    //#endregion
+
+    //#region Mouse updating
+
     if(mouseDown == true && prevMouseDown == false) {mouseStartPos = mousePos}
     else if(mouseDown == false) {mouseStartPos = [-1,-1]}
     prevMouseDown = mouseDown;
+
+    //#endregion
 }
 
 window.setInterval(mainLoop,15);

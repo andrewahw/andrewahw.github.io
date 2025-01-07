@@ -1,4 +1,4 @@
-//UI related
+//#region UI related
 
 export const cornerRadius = 15;
 
@@ -163,7 +163,9 @@ export function slider(pos,lineLength,lineThickness,circleRadius,circleScale,tra
     }
 }
 
-//DFT/Complex related
+//#endregion
+
+//#region DFT/Complex related
 export function complex(cartesian, polar) {
 
     this.re = 0;
@@ -258,3 +260,5 @@ export const dftTestInputs = [ //Just for testing
     [-2, 3, 6, 10, 10, -2, -6, -8, -2, -1, 10, -3, -6],
     [-5, 3, 2, -4, -4, 3, 10, -1, -7, 3, 3, 5, 1, -6]
 ]
+
+//#endregion
