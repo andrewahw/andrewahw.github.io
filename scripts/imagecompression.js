@@ -67,7 +67,7 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
         }
         samples = inverseDFT(frequencies)
         for(var j = 0; j < chunkData.data.length; j++) {
-            if(j % 4 <= 2) {chunkdData.data[j] = samples[Math.floor(samples / 4)]}
+            if(j % 4 <= 2) {chunkData.data[j] = samples[Math.floor(samples / 4)]}
         }
 
         //Output transformed chunk
