@@ -62,12 +62,14 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
             samples[j] = chunkData.data[j * 4] // rgb is same as grayscale, so can sample any channel apart from alpha
         }
         frequencies = DFT(samples)
-        for(var j = numOfFrequencies; j < frequencies.length; j++) { //applying filter
+        /*for(var j = numOfFrequencies; j < frequencies.length; j++) { //applying filter
             frequencies[j] = new complex([0,0],-1)
-        }
+        }*/
         samples = inverseDFT(frequencies)
-        for(var j = 0; j < chunkData.data.length; j++) {
-            if(j % 4 <= 2) {chunkData.data[j] = samples[Math.floor(samples / 4)]}
+        for(var j = 0; j < samples.length; j++) {
+            chunkData.data[(j * 4) + 0] = Math.floor(samples[j])
+            chunkData.data[(j * 4) + 1] = Math.floor(samples[j])
+            chunkData.data[(j * 4) + 2] = Math.floor(samples[j])
         }
 
         //Output transformed chunk
