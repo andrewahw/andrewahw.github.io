@@ -9,7 +9,7 @@ import { cornerRadius, button, slider, drawBackground, DFT, inverseDFT, dftTestI
 
 //testing the inverse dft
 for(var i = 0; i < dftTestInputs.length; i++) {
-    console.log(dftTestInputs)
+    console.log(dftTestInputs[i])
     var frequencies = DFT(dftTestInputs[i])
     console.log(inverseDFT(frequencies))
 }
