@@ -49,7 +49,7 @@ function imageCompress(argumentArray) { //Note: only works with square image of 
     let chunkData = ctx.createImageData(chunkSize,chunkSize)
     let samples = []
     let frequencies = []
-    for(var i = 0; i < Math.pow(numOfChunkRows,1); i++){
+    for(var i = 0; i < Math.pow(numOfChunkRows,2); i++){
 
         //Getting input chunk
         chunkData = ctx.getImageData(
