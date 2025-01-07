@@ -94,7 +94,7 @@ let chunkPixelSize = 16;
 let frequencySlider = new slider([80,410],250,5,10,1.5,15,"rgba(31, 80, 154, 0.5)","rgba(31, 80, 154, 0.9)");
 let chunkSlider = new slider([380,410],250,5,10,1.5,15,"rgba(31, 80, 154, 0.5)","rgba(31, 80, 154, 0.9)");
 let runButton = new button([canvas.width/2,yPadding + 128],
-    [120,120],"right arrow.png",[100,100],[31,80,154,0],[31,80,154,0.2],30,15,1.1,imageCompress,
+    [120,120],"right arrow.png",[100,100],[0,0,0,0],[0,0,0,0],30,15,1.1,imageCompress,
     [[xPadding,yPadding],[canvas.width - xPadding - 256, yPadding],frequencyToKeep,chunkPixelSize])
 let imageButton = new button([730,400],[140,40],"empty.png",[0,0],[250,218,122,0.7],[250,218,122,1],15,15,1.1,cycleImage)
 //rgba(250, 218, 122, 1)
@@ -125,6 +125,7 @@ function mainLoop() {
     ctx.fill();
 
     //Manage sliders
+    ctx.textAlign = "start"
     ctx.font = "18px Arial";
     ctx.fillStyle = "black";
     ctx.fillText("% Frequencies",frequencySlider.pos[0],frequencySlider.pos[1] - 20);
@@ -136,16 +137,17 @@ function mainLoop() {
     chunkSlider.sliderDraw(ctx);
 
     //Draw slider text underneath slider and update slider vars
+    ctx.textAlign = "center"
     ctx.font = "16px Arial";
     frequencyToKeep = frequencySlider.output
     ctx.fillStyle = "#000000" + (Math.round(255 * frequencySlider.currentTransition / frequencySlider.maxTransition)).toString(16);
     ctx.fillText((Math.round(frequencyToKeep * 100)).toString(),
-        frequencySlider.circleX,frequencySlider.pos[1] + 20)
+        frequencySlider.circleX,frequencySlider.pos[1] + 50)
 
     chunkPixelSize = Math.pow(2,Math.round(chunkSlider.output * 7) + 1);
     ctx.fillStyle = "#000000" + (Math.round(255 * chunkSlider.currentTransition / chunkSlider.maxTransition)).toString(16);
     ctx.fillText(chunkPixelSize.toString(),
-        frequencySlider.circleX,frequencySlider.pos[1] + 20)
+        chunkSlider.circleX,frequencySlider.pos[1] + 50)
 
     //Manage buttons
     runButton.buttonLoop(mousePos,mouseDown,prevMouseDown);
@@ -154,7 +156,7 @@ function mainLoop() {
     imageButton.buttonDraw(ctx);
     ctx.font = "18px Arial";
     ctx.fillStyle = "black"
-    ctx.fillText("Change Image",imageButton.origPos[0] - imageButton.origDim[0] * 0.5 + 10, imageButton.origPos[1] + 6)
+    ctx.fillText("Change Image",imageButton.origPos[0] + imageButton.origDim[0] * 0.5, imageButton.origPos[1] + 6)
 
     //Mouse updating
     if(mouseDown == true && prevMouseDown == false) {mouseStartPos = mousePos}
