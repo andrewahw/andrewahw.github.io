@@ -26,9 +26,32 @@ simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 
 //#endregion
 
+///#region Simulation specifics
+
+samples = []
+
+//#endregion
+
 function mainLoop() {
 
     drawBackground(canvas, ctx, cornerRadius) //Draw background
+
+    //#region Mouse tracing
+
+    if(mouseDown == true) {samples[samples.length] = mousePos}
+
+    //#endregion
+
+    //#region draw trace
+
+    for(var i = 0; i < samples.length - 1; i++) {
+        ctx.beginPath();
+        ctx.moveTo(samples[i][0],samples[i][1]);
+        ctx.lineTo(samples[i + 1][0], samples[i + 1][1])
+        ctx.stroke();
+    }
+
+    //#endregion
 
     //#region Mouse updating
 
