@@ -1,8 +1,8 @@
 //#region UI related
 
-export const cornerRadius = 15;
+export const cornerRadius = 15; // Radius of the background corners
 
-export function drawBackground(canvas, ctx, cornerRadius) {
+export function drawBackground(canvas, ctx, cornerRadius) { //Draw white background
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
     ctx.fillStyle = "white";
@@ -14,32 +14,37 @@ export function drawBackground(canvas, ctx, cornerRadius) {
     ctx.fill();
 }
 
-export function button(position, dimensions, imgLink, imgDimensions, colour, colourTransition, borderRadius, transition, transitionScale,onClick, onClickArguments) {
+export function button(position, dimensions, imgLink, imgDimensions, colour, colourTransition, borderRadius, transition, transitionScale,onClick, onClickArguments) { //Button class
 
-    this.origPos = position;
+    //Original size (as size changes when held over)
+    this.origPos = position; //position and dimensions are a 2d vector with x/width and y/height respectively
     this.origDim = dimensions;
     this.origBorderRadius = borderRadius;
     this.origImgDim = imgDimensions;
 
-    this.pos = position; //position and dimensions are a 2d vector with x/width and y/height respectively
+    //Current position/Dimensions
+    this.pos = position;
     this.dim = dimensions;
-    this.onClick = function() {onClick(onClickArguments);}
+    this.borderRadius = borderRadius;
+    this.onClick = function() {onClick(onClickArguments);} //Setup function that runs when clicked
 
+    //Image setup (making image object with dimensions)
     this.imageLink = "../images/" + imgLink
     this.image = new Image();
     this.image.src = this.imageLink
     this.imageDim = imgDimensions;
 
+    //Colour setting up
     this.origColour = colour; // colours are in 4d array (rgba) to make colour interpolation easier
     this.transColour = colourTransition; // colour it transitions to when hovered
     this.colour = colour; // current colour
-    this.borderRadius = borderRadius;
 
+    //Animation scaling
     this.currentTransition = 0;
     this.maxTransition = transition;
     this.transitionMaxScale = transitionScale;
 
-    this.buttonLoop = function(mousePos, mouseDown, prevMouseDown) {
+    this.buttonLoop = function(mousePos, mouseDown, prevMouseDown) { //Function that runs every cycle
         
         //Mouse user handling
         if(mousePos[0] > this.pos[0] && mousePos[0] < (this.pos[0] + this.dim[0])
@@ -76,8 +81,9 @@ export function button(position, dimensions, imgLink, imgDimensions, colour, col
             + Math.floor(currentColourArray[3] * 255).toString(16)
     }
 
-    this.buttonDraw = function(ctx) {
-        ctx.beginPath(); //Main body
+    this.buttonDraw = function(ctx) { //Draws button (also called every cycle)
+
+        ctx.beginPath(); //Main body (rectangle with rounded corners)
         ctx.fillStyle = this.colour;
         ctx.arc(this.pos[0] + this.borderRadius, this.pos[1] + this.borderRadius, this.borderRadius, Math.PI, 1.5 * Math.PI);
         ctx.arc(this.pos[0] + this.dim[0] - this.borderRadius, this.pos[1] + this.borderRadius, this.borderRadius, 1.5 * Math.PI, 0);
@@ -85,7 +91,7 @@ export function button(position, dimensions, imgLink, imgDimensions, colour, col
         ctx.arc(this.pos[0] + this.borderRadius, this.pos[1] + this.dim[1] - this.borderRadius, this.borderRadius, 0.5 * Math.PI, Math.PI);
         ctx.fill();
 
-        ctx.drawImage(this.image,this.pos[0] + ((this.dim[0] - this.imageDim[0]) / 2),
+        ctx.drawImage(this.image,this.pos[0] + ((this.dim[0] - this.imageDim[0]) / 2), //Drawing image icon
             this.pos[1] + ((this.dim[1] - this.imageDim[1]) / 2),this.imageDim[0],this.imageDim[1]);
     }
 }
