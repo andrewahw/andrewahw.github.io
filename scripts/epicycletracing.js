@@ -28,7 +28,7 @@ simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 
 ///#region Simulation specifics
 
-samples = []
+var samples = []
 
 //#endregion
 
