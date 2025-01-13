@@ -78,10 +78,10 @@ function mainLoop() {
             }
         }
         else {
-            var prevSample = samples[samples.length - 1]
+            var prevSample = samples[samples.length - 1];
             samples[samples.length] = mousePos;
             traceLen += Math.sqrt(Math.pow(prevSample[0] - mousePos[0],2) + 
-                        Math.pow(prevSample[1] - mousePos[1],2))
+                        Math.pow(prevSample[1] - mousePos[1],2));
         }
     }
 
