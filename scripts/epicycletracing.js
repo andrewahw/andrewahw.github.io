@@ -26,9 +26,27 @@ simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 
 //#endregion
 
-///#region Simulation specifics
+//#region Wave Objects
 
-var samples = []
+function epicycle(radius,angularVelocity,initialAngle) {
+
+    this.radius = radius;
+    this.angularVelocity = angularVelocity;
+    this.currentAngle = initialAngle;
+
+    this.getPosition = function(timestep) {
+        this.currentAngle = (this.currentAngle + (this.angularVelocity * timestep)) % (Math.PI * 2);
+        let position = [this.radius * Math.cos(this.currentAngle), this.radius * Math.sin(this.currentAngle)];
+        return position;
+    };
+}
+
+//#endregion
+
+//#region Simulation specifics
+
+var samples = [];
+var traceLen = 0;
 var tracing = false;
 
 //#endregion
@@ -41,13 +59,31 @@ function mainLoop() {
 
     if(mouseDown == true && prevMouseDown == false) {
         tracing = true;
+        traceLen = 0;
         samples = []
     }
     if(tracing) {
-        samples[samples.length] = mousePos
-        if(mouseDown == false) {tracing = false;}
+        if(mouseDown == false) {
+            tracing = false;
+            var avgDis = traceLen / samples.length;
+            var lastSample = samples[samples.length - 1];
+            var startEndDis = Math.sqrt(Math.pow(lastSample[0] - samples[0][0],2) + 
+                            Math.pow(lastSample[1] - samples[0][1],2));
+            var numOfExtraSamples = Math.floor(startEndDis / avgDis) - 1
+            for(var i = 0; i < numOfExtraSamples; i++) {
+                samples[samples.length] = [
+                    lastSample[0] + (i / numOfExtraSamples) * (lastSample[0] - samples[0][0]),
+                    lastSample[1] + (i / numOfExtraSamples) * (lastSample[1] - samples[0][1]),
+                ]
+            }
+        }
+        else {
+            var prevSample = samples[samples.length - 1]
+            samples[samples.length] = mousePos;
+            traceLen += Math.sqrt(Math.pow(prevSample[0] - mousePos[0],2) + 
+                        Math.pow(prevSample[1] - mousePos[1],2))
+        }
     }
-
 
     //#endregion
 
