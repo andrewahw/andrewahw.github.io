@@ -29,6 +29,7 @@ simulationDiv.addEventListener("mouseup",function() {mouseDown = false;});
 ///#region Simulation specifics
 
 var samples = []
+var tracing = false;
 
 //#endregion
 
@@ -38,7 +39,15 @@ function mainLoop() {
 
     //#region Mouse tracing
 
-    if(mouseDown == true) {samples[samples.length] = mousePos}
+    if(mouseDown == true && prevMouseDown == false) {
+        tracing = true;
+        samples = []
+    }
+    if(tracing) {
+        samples[samples.length] = mousePos
+        if(mouseDown == false) {tracing = false;}
+    }
+
 
     //#endregion
 
