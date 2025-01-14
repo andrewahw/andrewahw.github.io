@@ -46,6 +46,7 @@ function epicycle(radius,angularVelocity,initialAngle) {
 //#region Simulation specifics
 
 var samples = [];
+var prevSample = [];
 var traceLen = 0;
 var tracing = false;
 
@@ -66,23 +67,22 @@ function mainLoop() {
         if(mouseDown == false) {
             tracing = false;
             var avgDis = traceLen / samples.length;
-            var lastSample = samples[samples.length - 1];
-            var startEndDis = Math.sqrt(Math.pow(lastSample[0] - samples[0][0],2) + 
-                            Math.pow(lastSample[1] - samples[0][1],2));
+            var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
+                            Math.pow(prevSample[1] - samples[0][1],2));
             var numOfExtraSamples = Math.floor(startEndDis / avgDis) - 1
             for(var i = 0; i < numOfExtraSamples; i++) {
                 samples[samples.length] = [
-                    lastSample[0] + (i / numOfExtraSamples) * (lastSample[0] - samples[0][0]),
-                    lastSample[1] + (i / numOfExtraSamples) * (lastSample[1] - samples[0][1]),
+                    prevSample[0] + (i / numOfExtraSamples) * (prevSample[0] - samples[0][0]),
+                    prevSample[1] + (i / numOfExtraSamples) * (prevSample[1] - samples[0][1]),
                 ]
             }
         }
         else {
-            var prevSample = samples[samples.length - 1];
             samples[samples.length] = mousePos;
             traceLen += Math.sqrt(Math.pow(prevSample[0] - mousePos[0],2) + 
                         Math.pow(prevSample[1] - mousePos[1],2));
         }
+        prevSample = samples[samples.length - 1];
     }
 
     //#endregion
