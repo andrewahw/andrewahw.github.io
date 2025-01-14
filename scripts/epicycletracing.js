@@ -76,6 +76,7 @@ function mainLoop() {
                     prevSample[1] - (i / numOfExtraSamples) * (prevSample[1] - samples[0][1]),
                 ]
             }
+            console.log(samples)
         }
         else {
             samples[samples.length] = mousePos;
