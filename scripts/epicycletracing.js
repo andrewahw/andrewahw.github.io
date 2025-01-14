@@ -89,10 +89,11 @@ function mainLoop() {
 
     //#region draw trace
 
-    for(var i = 0; i < samples.length - 1; i++) {
+    for(var i = 0; i < samples.length; i++) {
         ctx.beginPath();
-        ctx.moveTo(samples[i][0],samples[i][1]);
-        ctx.lineTo(samples[i + 1][0], samples[i + 1][1])
+        //ctx.moveTo(samples[i][0],samples[i][1]);
+        //ctx.lineTo(samples[i + 1][0], samples[i + 1][1])
+        ctx.arc(samples[i][0],samples[i][1],2,0,Math.PI * 2)
         ctx.stroke();
     }
 
