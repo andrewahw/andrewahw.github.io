@@ -58,19 +58,19 @@ function mainLoop() {
 
     //#region Mouse tracing
 
-    if(mouseDown == true && prevMouseDown == false) {
+    if(mouseDown == true && prevMouseDown == false) { //Check to initiate tracing
         tracing = true;
-        traceLen = 0;
+        traceLen = 0; //Reset these variables
         samples = []
     }
     if(tracing) {
-        if(mouseDown == false) {
+        if(mouseDown == false) { //Checking if tracing has finished
             tracing = false;
-            var avgDis = traceLen / samples.length;
+            var avgDis = traceLen / samples.length; //Calculate average distance between samples
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
-                            Math.pow(prevSample[1] - samples[0][1],2));
-            var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 2)
-            for(var i = 1; i <= numOfExtraSamples; i++) {
+                            Math.pow(prevSample[1] - samples[0][1],2)); //Pythagoras to calculate distance between start and end
+            var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 2) //Calculate number of extra samples to add
+            for(var i = 1; i <= numOfExtraSamples; i++) { //Add sampes by interpolating between start and end points
                 samples[samples.length] = [
                     prevSample[0] - (i / numOfExtraSamples) * (prevSample[0] - samples[0][0]),
                     prevSample[1] - (i / numOfExtraSamples) * (prevSample[1] - samples[0][1]),
@@ -78,12 +78,12 @@ function mainLoop() {
             }
             console.log(samples)
         }
-        else {
+        else { //Continuing with the tracing
             samples[samples.length] = mousePos;
             traceLen += Math.sqrt(Math.pow(prevSample[0] - mousePos[0],2) + 
-                        Math.pow(prevSample[1] - mousePos[1],2));
+                        Math.pow(prevSample[1] - mousePos[1],2)); //Add trace distance to later calculate average distance
         }
-        prevSample = samples[samples.length - 1];
+        prevSample = samples[samples.length - 1]; //Update prevSample
     }
 
     //#endregion
