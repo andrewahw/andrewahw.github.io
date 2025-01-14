@@ -69,11 +69,11 @@ function mainLoop() {
             var avgDis = traceLen / samples.length;
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
                             Math.pow(prevSample[1] - samples[0][1],2));
-            var numOfExtraSamples = Math.floor(startEndDis / avgDis) - 1
+            var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 1)
             for(var i = 0; i < numOfExtraSamples; i++) {
                 samples[samples.length] = [
-                    prevSample[0] + (i / numOfExtraSamples) * (prevSample[0] - samples[0][0]),
-                    prevSample[1] + (i / numOfExtraSamples) * (prevSample[1] - samples[0][1]),
+                    prevSample[0] - (i / numOfExtraSamples) * (prevSample[0] - samples[0][0]),
+                    prevSample[1] - (i / numOfExtraSamples) * (prevSample[1] - samples[0][1]),
                 ]
             }
         }
