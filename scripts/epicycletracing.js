@@ -65,6 +65,8 @@ function mainLoop() {
     }
     if(tracing) {
         if(mouseDown == false) { //Checking if tracing has finished
+
+            //Interpolating between start and end points
             tracing = false;
             var avgDis = traceLen / samples.length; //Calculate average distance between samples
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
@@ -77,6 +79,25 @@ function mainLoop() {
                 ]
             }
             console.log(samples)
+        
+            //Reconfigure samples to powers of 2
+            var newSamples = []
+            var newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length)))
+            
+            var lerpFactor = []
+            for(var i = 1; i < newSampleLen; i++) {
+                lerpFactor = [
+                    Math.floor(i * samples.length / newSampleLen),
+                    (i * samples.length / newSampleLen) % 1
+                ] //Gets int and decimal part of sample percentage mapped to sampleLen
+                newSamples[i] = [
+                    samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0]][0] - samples[lerpFactor[0] - 1][0]),
+                    samples[lerpFactor[0]][1] + lerpFactor[1] * (samples[lerpFactor[0]][1] - samples[lerpFactor[0] - 1][1])
+                ]
+            }
+            samples = newSamples
+
+            //FFT it up (and create set of epicycles)
         }
         else { //Continuing with the tracing
             samples[samples.length] = mousePos;
