@@ -85,11 +85,12 @@ function mainLoop() {
             var newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length)))
             
             var lerpFactor = []
-            for(var i = 1; i < newSampleLen; i++) {
+            for(var i = 0; i < newSampleLen; i++) {
                 lerpFactor = [
                     Math.floor(i * samples.length / newSampleLen),
                     (i * samples.length / newSampleLen) % 1
                 ] //Gets int and decimal part of sample percentage mapped to sampleLen
+                samples[samples.length] = samples[samples.length - 1]; //Need to pad out the end
                 console.log(lerpFactor)
                 newSamples[i] = [
                     samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0] + 1][0] - samples[lerpFactor[0]][0]),
@@ -97,6 +98,7 @@ function mainLoop() {
                 ]
             }
             samples = newSamples
+            console.log(newSamples)
 
             //FFT it up (and create set of epicycles)
         }
