@@ -91,8 +91,8 @@ function mainLoop() {
                     (i * samples.length / newSampleLen) % 1
                 ] //Gets int and decimal part of sample percentage mapped to sampleLen
                 newSamples[i] = [
-                    samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0]][0] - samples[lerpFactor[0] - 1][0]),
-                    samples[lerpFactor[0]][1] + lerpFactor[1] * (samples[lerpFactor[0]][1] - samples[lerpFactor[0] - 1][1])
+                    samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0] + 1][0] - samples[lerpFactor[0]][0]),
+                    samples[lerpFactor[0]][1] + lerpFactor[1] * (samples[lerpFactor[0] + 1][1] - samples[lerpFactor[0]][1])
                 ]
             }
             samples = newSamples
