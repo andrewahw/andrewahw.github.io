@@ -82,8 +82,7 @@ function mainLoop() {
         
             //Reconfigure samples to powers of 2
             var newSamples = []
-            var newSampleLen = Math.pow(2, Math.floor(Math.log2(samples.length)) + 2)
-            console.log(newSampleLen)
+            var newSampleLen = Math.pow(2, Math.floor(Math.log2(samples.length)) + 1)
 
             var lerpFactor = []
             for(var i = 0; i < newSampleLen; i++) {
@@ -98,7 +97,8 @@ function mainLoop() {
                 ]
             }
             samples = newSamples
-            console.log(newSamples)
+            console.log(samples)
+            console.log(samples.length)
 
             //FFT it up (and create set of epicycles)
         }
