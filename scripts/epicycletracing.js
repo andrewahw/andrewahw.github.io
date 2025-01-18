@@ -50,6 +50,10 @@ var prevSample = [];
 var traceLen = 0;
 var tracing = false;
 
+var newSamples = [];
+var newSampleLen = [];
+var lerpFactor = [];
+
 //#endregion
 
 function mainLoop() {
@@ -81,10 +85,10 @@ function mainLoop() {
             console.log(samples)
         
             //Reconfigure samples to powers of 2
-            var newSamples = []
-            var newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length))) * 2 //x2 is some bandaid stuff
-
-            var lerpFactor = []
+            newSamples = [];
+            newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length)));
+            lerpFactor = [];
+            
             for(var i = 0; i < newSampleLen; i++) {
                 lerpFactor = [
                     Math.floor(i * samples.length / newSampleLen),
