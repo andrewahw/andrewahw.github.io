@@ -82,7 +82,7 @@ function mainLoop() {
         
             //Reconfigure samples to powers of 2
             var newSamples = []
-            var newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length)))
+            var newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length))) * 2 //x2 is some bandaid stuff
 
             var lerpFactor = []
             for(var i = 0; i < newSampleLen; i++) {
