@@ -46,6 +46,7 @@ function epicycle(radius,angularVelocity,initialAngle) {
 //#region Simulation specifics
 
 var samples = [];
+var prevSample = [];
 var traceLen = 0;
 var tracing = false;
 
@@ -92,8 +93,8 @@ function mainLoop() {
             
             for(var i = 0; i < newSampleLen; i++) {
                 lerpFactor = [
-                    Math.floor(i * samples.length / newSampleLen),
-                    (i * samples.length / newSampleLen) % 1
+                    Math.floor(i * (samples.length - 1) / newSampleLen),
+                    (i * (samples.length - 1) / newSampleLen) % 1
                 ] //Gets int and decimal part of sample percentage mapped to sampleLen
                 newSamples[i] = [
                     samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0] + 1][0] - samples[lerpFactor[0]][0]),
@@ -112,6 +113,7 @@ function mainLoop() {
                         Math.pow(samples[samples.length - 1][1] - mousePos[1],2)); //Add trace distance to later calculate average distance
             console.log(samples)
         }
+        prevSample = samples[samples.length - 1];
     }
 
     //#endregion
