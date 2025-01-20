@@ -47,7 +47,6 @@ function epicycle(radius,angularVelocity,initialAngle) {
 
 var samples = [];
 var prevSample = [];
-var traceLen = 0;
 var tracing = false;
 
 var newSamples = [];
@@ -64,7 +63,6 @@ function mainLoop() {
 
     if(mouseDown == true && prevMouseDown == false) { //Check to initiate tracing
         tracing = true;
-        traceLen = 0; //Reset these variables
         samples = []
     }
     if(tracing) {
@@ -72,8 +70,11 @@ function mainLoop() {
 
             //Interpolating between start and end points
             tracing = false;
-            prevSample = samples[samples.length - 1];
-            var avgDis = traceLen / samples.length; //Calculate average distance between samples
+            var avgDis = 0;
+            for(var i = 1; i < samples.length; i++) { //Calculate average distance between samples
+                avgDis += Math.sqrt(Math.pow(samples[i - 1][0] - samples[i][0],2) + 
+                Math.pow(samples[i - 1][1] - samples[i][1],2)) / samples.length;
+            }
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
                             Math.pow(prevSample[1] - samples[0][1],2)); //Pythagoras to calculate distance between start and end
             var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 2) //Calculate number of extra samples to add
@@ -107,8 +108,6 @@ function mainLoop() {
         }
         else { //Continuing with the tracing
             samples.push(mousePos);
-            traceLen += Math.sqrt(Math.pow(prevSample[0] - mousePos[0],2) + 
-                        Math.pow(prevSample[1] - mousePos[1],2)); //Add trace distance to later calculate average distance
         }
         prevSample = samples[samples.length - 1];
     }
