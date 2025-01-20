@@ -72,16 +72,16 @@ function mainLoop() {
 
             //Interpolating between start and end points
             tracing = false;
-            /*var avgDis = traceLen / samples.length; //Calculate average distance between samples
+            var avgDis = traceLen / samples.length; //Calculate average distance between samples
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
                             Math.pow(prevSample[1] - samples[0][1],2)); //Pythagoras to calculate distance between start and end
             var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 2) //Calculate number of extra samples to add
             for(var i = 1; i <= numOfExtraSamples; i++) { //Add sampes by interpolating between start and end points
                 samples.push([
-                    prevSample[0] - (i / numOfExtraSamples) * (prevSample[0] - samples[0][0]),
-                    prevSample[1] - (i / numOfExtraSamples) * (prevSample[1] - samples[0][1]),
+                    prevSample[0] + (i / numOfExtraSamples) * (samples[0][0] - prevSample[0]),
+                    prevSample[1] + (i / numOfExtraSamples) * (samples[0][1] - prevSample[1]),
                 ])
-            }*/
+            }
             console.log(samples)
         
             //Reconfigure samples to powers of 2
