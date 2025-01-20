@@ -72,16 +72,16 @@ function mainLoop() {
 
             //Interpolating between start and end points
             tracing = false;
-            var avgDis = traceLen / samples.length; //Calculate average distance between samples
+            /*var avgDis = traceLen / samples.length; //Calculate average distance between samples
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
                             Math.pow(prevSample[1] - samples[0][1],2)); //Pythagoras to calculate distance between start and end
             var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 2) //Calculate number of extra samples to add
             for(var i = 1; i <= numOfExtraSamples; i++) { //Add sampes by interpolating between start and end points
-                samples[samples.length] = [
+                samples.push([
                     prevSample[0] - (i / numOfExtraSamples) * (prevSample[0] - samples[0][0]),
                     prevSample[1] - (i / numOfExtraSamples) * (prevSample[1] - samples[0][1]),
-                ]
-            }
+                ])
+            }*/
             console.log(samples)
         
             //Reconfigure samples to powers of 2
@@ -94,12 +94,12 @@ function mainLoop() {
                     Math.floor(i * samples.length / newSampleLen),
                     (i * samples.length / newSampleLen) % 1
                 ] //Gets int and decimal part of sample percentage mapped to sampleLen
-                samples[samples.length] = samples[samples.length - 1]; //Need to pad out the end
-                newSamples[i] = [
+                samples.push(samples[samples.length - 1]); //Need to pad out the end
+                newSamples.push([
                     samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0] + 1][0] - samples[lerpFactor[0]][0]),
                     samples[lerpFactor[0]][1] + lerpFactor[1] * (samples[lerpFactor[0] + 1][1] - samples[lerpFactor[0]][1])
-                ]
-                samples.length = samples.length - 1; //Un-pad out the end (kinda stupid fix)
+                ])
+                samples.pop(); //Un-pad out the end (kinda stupid fix)
             }
             samples = newSamples
             console.log(samples)
@@ -109,8 +109,8 @@ function mainLoop() {
         }
         else { //Continuing with the tracing
             samples.push(mousePos);
-            traceLen += Math.sqrt(Math.pow(samples[samples.length - 1][0] - mousePos[0],2) + 
-                        Math.pow(samples[samples.length - 1][1] - mousePos[1],2)); //Add trace distance to later calculate average distance
+            traceLen += Math.sqrt(Math.pow(prevSample[0] - mousePos[0],2) + 
+                        Math.pow(prevSample[1] - mousePos[1],2)); //Add trace distance to later calculate average distance
             console.log(samples)
         }
         prevSample = samples[samples.length - 1];
