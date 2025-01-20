@@ -46,6 +46,7 @@ function epicycle(radius,angularVelocity,initialAngle) {
 //#region Simulation specifics
 
 var samples = [];
+var sampleLen = 0;
 var prevSample = [];
 var traceLen = 0;
 var tracing = false;
@@ -66,6 +67,7 @@ function mainLoop() {
         tracing = true;
         traceLen = 0; //Reset these variables
         samples = []
+        sampleLen = 0;
     }
     if(tracing) {
         if(mouseDown == false) { //Checking if tracing has finished
@@ -90,15 +92,16 @@ function mainLoop() {
             console.log(Math.log2(samples.length));
             console.log(Math.ceil(Math.log2(samples.length)));
             console.log(Math.pow(2,Math.ceil(Math.log2(samples.length))));
-            newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length)));
+            newSampleLen = Math.pow(2, Math.ceil(Math.log2(sampleLen)));
+            sampleLen = newSampleLen;
             lerpFactor = [];
             
             for(var i = 0; i < newSampleLen; i++) {
                 lerpFactor = [
-                    Math.floor(i * samples.length / newSampleLen),
-                    (i * samples.length / newSampleLen) % 1
+                    Math.floor(i * sampleLen / newSampleLen),
+                    (i * sampleLen / newSampleLen) % 1
                 ] //Gets int and decimal part of sample percentage mapped to sampleLen
-                samples[samples.length] = samples[samples.length - 1]; //Need to pad out the end
+                samples[sampleLen] = samples[sampleLen - 1]; //Need to pad out the end
                 newSamples[i] = [
                     samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0] + 1][0] - samples[lerpFactor[0]][0]),
                     samples[lerpFactor[0]][1] + lerpFactor[1] * (samples[lerpFactor[0] + 1][1] - samples[lerpFactor[0]][1])
@@ -111,11 +114,12 @@ function mainLoop() {
             //FFT it up (and create set of epicycles)
         }
         else { //Continuing with the tracing
+            sampleLen += 1;
             samples[samples.length] = mousePos;
             traceLen += Math.sqrt(Math.pow(prevSample[0] - mousePos[0],2) + 
                         Math.pow(prevSample[1] - mousePos[1],2)); //Add trace distance to later calculate average distance
         }
-        prevSample = samples[samples.length - 1]; //Update prevSample
+        prevSample = samples[sampleLen- 1]; //Update prevSample
     }
 
     //#endregion
