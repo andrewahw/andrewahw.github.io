@@ -46,7 +46,6 @@ function epicycle(radius,angularVelocity,initialAngle) {
 //#region Simulation specifics
 
 var samples = [];
-var prevSample = [];
 var traceLen = 0;
 var tracing = false;
 
@@ -87,10 +86,6 @@ function mainLoop() {
             //Reconfigure samples to powers of 2
             newSamples = [];
             var sampleLen = samples.length;
-            console.log(samples.length);
-            console.log(Math.log2(samples.length));
-            console.log(Math.ceil(Math.log2(samples.length)));
-            console.log(Math.pow(2,Math.ceil(Math.log2(samples.length))));
             newSampleLen = Math.pow(2, Math.ceil(Math.log2(sampleLen)));
             lerpFactor = [];
             
@@ -113,10 +108,9 @@ function mainLoop() {
         }
         else { //Continuing with the tracing
             samples[samples.length] = mousePos;
-            traceLen += Math.sqrt(Math.pow(prevSample[0] - mousePos[0],2) + 
-                        Math.pow(prevSample[1] - mousePos[1],2)); //Add trace distance to later calculate average distance
+            traceLen += Math.sqrt(Math.pow(samples[samples.length - 1][0] - mousePos[0],2) + 
+                        Math.pow(samples[samples.length - 1][1] - mousePos[1],2)); //Add trace distance to later calculate average distance
         }
-        prevSample = samples[samples.length - 1]; //Update prevSample
     }
 
     //#endregion
