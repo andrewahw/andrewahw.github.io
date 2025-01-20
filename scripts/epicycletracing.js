@@ -107,7 +107,7 @@ function mainLoop() {
             //FFT it up (and create set of epicycles)
         }
         else { //Continuing with the tracing
-            samples[samples.length] = mousePos;
+            samples.push(mousePos);
             traceLen += Math.sqrt(Math.pow(samples[samples.length - 1][0] - mousePos[0],2) + 
                         Math.pow(samples[samples.length - 1][1] - mousePos[1],2)); //Add trace distance to later calculate average distance
         }
