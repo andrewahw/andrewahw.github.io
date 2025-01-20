@@ -86,20 +86,20 @@ function mainLoop() {
         
             //Reconfigure samples to powers of 2
             newSamples = [];
-            var sampleLen = samples.length;
-            newSampleLen = Math.pow(2, Math.ceil(Math.log2(sampleLen)));
-            //samples[samples.length] = samples[samples.length - 1]; //Need to pad out the end
+            newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length)));
             lerpFactor = [];
             
             for(var i = 0; i < newSampleLen; i++) {
                 lerpFactor = [
-                    Math.floor(i * (samples.length - 1) / newSampleLen),
-                    (i * (samples.length - 1) / newSampleLen) % 1
+                    Math.floor(i * samples.length / newSampleLen),
+                    (i * samples.length / newSampleLen) % 1
                 ] //Gets int and decimal part of sample percentage mapped to sampleLen
+                samples[samples.length] = samples[samples.length - 1]; //Need to pad out the end
                 newSamples[i] = [
                     samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0] + 1][0] - samples[lerpFactor[0]][0]),
                     samples[lerpFactor[0]][1] + lerpFactor[1] * (samples[lerpFactor[0] + 1][1] - samples[lerpFactor[0]][1])
                 ]
+                samples.length = samples.length - 1; //Un-pad out the end (kinda stupid fix)
             }
             samples = newSamples
             console.log(samples)
