@@ -86,6 +86,10 @@ function mainLoop() {
         
             //Reconfigure samples to powers of 2
             newSamples = [];
+            console.log(samples.length);
+            console.log(Math.log2(samples.length));
+            console.log(Math.ceil(Math.log2(samples.length)));
+            console.log(Math.pow(2,Math.ceil(Math.log2(samples.length))));
             newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length)));
             lerpFactor = [];
             
