@@ -71,7 +71,7 @@ function mainLoop() {
 
             //Interpolating between start and end points
             tracing = false;
-            /*var avgDis = traceLen / samples.length; //Calculate average distance between samples
+            var avgDis = traceLen / samples.length; //Calculate average distance between samples
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
                             Math.pow(prevSample[1] - samples[0][1],2)); //Pythagoras to calculate distance between start and end
             var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 2) //Calculate number of extra samples to add
@@ -80,13 +80,14 @@ function mainLoop() {
                     prevSample[0] - (i / numOfExtraSamples) * (prevSample[0] - samples[0][0]),
                     prevSample[1] - (i / numOfExtraSamples) * (prevSample[1] - samples[0][1]),
                 ]
-            }*/
+            }
             console.log(samples)
         
             //Reconfigure samples to powers of 2
             newSamples = [];
             var sampleLen = samples.length;
             newSampleLen = Math.pow(2, Math.ceil(Math.log2(sampleLen)));
+            //samples[samples.length] = samples[samples.length - 1]; //Need to pad out the end
             lerpFactor = [];
             
             for(var i = 0; i < newSampleLen; i++) {
@@ -94,7 +95,6 @@ function mainLoop() {
                     Math.floor(i * samples.length / newSampleLen),
                     (i * samples.length / newSampleLen) % 1
                 ] //Gets int and decimal part of sample percentage mapped to sampleLen
-                samples[samples.length] = samples[samples.length - 1]; //Need to pad out the end
                 newSamples[i] = [
                     samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0] + 1][0] - samples[lerpFactor[0]][0]),
                     samples[lerpFactor[0]][1] + lerpFactor[1] * (samples[lerpFactor[0] + 1][1] - samples[lerpFactor[0]][1])
