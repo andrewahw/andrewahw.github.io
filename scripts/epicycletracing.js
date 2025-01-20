@@ -72,6 +72,7 @@ function mainLoop() {
 
             //Interpolating between start and end points
             tracing = false;
+            prevSample = samples[samples.length - 1];
             var avgDis = traceLen / samples.length; //Calculate average distance between samples
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
                             Math.pow(prevSample[1] - samples[0][1],2)); //Pythagoras to calculate distance between start and end
@@ -82,7 +83,6 @@ function mainLoop() {
                     prevSample[1] + (i / numOfExtraSamples) * (samples[0][1] - prevSample[1]),
                 ])
             }
-            console.log(samples)
         
             //Reconfigure samples to powers of 2
             newSamples = [];
@@ -102,8 +102,6 @@ function mainLoop() {
                 samples.pop(); //Un-pad out the end (kinda stupid fix)
             }
             samples = newSamples
-            console.log(samples)
-            console.log(samples.length)
 
             //FFT it up (and create set of epicycles)
         }
@@ -111,7 +109,6 @@ function mainLoop() {
             samples.push(mousePos);
             traceLen += Math.sqrt(Math.pow(prevSample[0] - mousePos[0],2) + 
                         Math.pow(prevSample[1] - mousePos[1],2)); //Add trace distance to later calculate average distance
-            console.log(samples)
         }
         prevSample = samples[samples.length - 1];
     }
