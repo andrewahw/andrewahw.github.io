@@ -157,7 +157,8 @@ body {
     top: 50%;
     max-width: 55%;
     transform: translate(65%,-50%);
-    background-color: green;
+    font-size: 15px;
+
 }
 
 #title {
