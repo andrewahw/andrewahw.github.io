@@ -156,7 +156,7 @@ body {
     position: absolute;
     top: 50%;
     max-width: 55%;
-    transform: translate(60%,-50%);
+    transform: translate(65%,-50%);
     background-color: green;
 }
 
