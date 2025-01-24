@@ -34,7 +34,7 @@ function epicycle(radius,angularVelocity,initialAngle) {
     this.angularVelocity = angularVelocity;
     this.currentAngle = initialAngle;
 
-    this.getPosition = function(timestep) {
+    this.getPosition = function(timestep) { //Update position by timestep, then returns position
         this.currentAngle = (this.currentAngle + (this.angularVelocity * timestep)) % (Math.PI * 2);
         let position = [this.radius * Math.cos(this.currentAngle), this.radius * Math.sin(this.currentAngle)];
         return position;
@@ -45,13 +45,18 @@ function epicycle(radius,angularVelocity,initialAngle) {
 
 //#region Simulation specifics
 
+//Things to do with recording the actual sample
 var samples = [];
 var prevSample = [];
 var tracing = false;
 
+//Things to do with resampling to powers of 2
 var newSamples = [];
 var newSampleLen = [];
 var lerpFactor = [];
+
+//Epicycle things
+var epicycles = [];
 
 //#endregion
 
@@ -105,6 +110,11 @@ function mainLoop() {
             samples = newSamples
 
             //FFT it up (and create set of epicycles)
+            epicycles = [];
+            var frequencies = FFT(samples)
+            for(var i = 0; i < frequencies.length; i++) {
+                console.log(frequencies)
+            }
         }
         else { //Continuing with the tracing
             samples.push(mousePos);
