@@ -115,7 +115,6 @@ function mainLoop() {
             epicycles = [];
             var frequencies = FFT(samples)
             for(var i = 0; i < frequencies.length; i++) {
-                console.log(frequencies)
                 var currentFreq = frequencies[i]
                 epicycles[i] = new epicycle(currentFreq.mod,i,currentFreq.arg);
             }
@@ -142,6 +141,16 @@ function mainLoop() {
     //#endregion
 
     //#region Draw Epicycles
+    var currentPos = [0,0];
+    var epicyclePos = [];
+    for(var i = 0; i < epicycles.length; i++) {
+        epicyclePos = epicycles[i].getPosition(0.001); //Get position of current epicycle
+        ctx.beginPath();
+        ctx.moveTo(currentPos[0], currentPos[1]);
+        ctx.lineTo(currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1])
+        ctx.stroke();
+        currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
+    }
 
     //not done yet lol
 
