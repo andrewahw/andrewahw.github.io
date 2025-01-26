@@ -73,7 +73,7 @@ function mainLoop() {
     if(tracing) {
         if(mouseDown == false) { //Checking if tracing has finished
 
-            //Interpolating between start and end points
+            //#region Interpolating between start and end points
             tracing = false;
             var avgDis = 0;
             for(var i = 1; i < samples.length; i++) { //Calculate average distance between samples
@@ -89,8 +89,9 @@ function mainLoop() {
                     prevSample[1] + (i / numOfExtraSamples) * (samples[0][1] - prevSample[1]),
                 ])
             }
+            //#endregion
         
-            //Reconfigure samples to powers of 2
+            //#region Reconfigure samples to powers of 2
             newSamples = [];
             newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length)));
             lerpFactor = [];
@@ -108,13 +109,17 @@ function mainLoop() {
                 samples.pop(); //Un-pad out the end (kinda stupid fix)
             }
             samples = newSamples
+            //#endregion
 
-            //FFT it up (and create set of epicycles)
+            //#region FFT it up (and create set of epicycles)
             epicycles = [];
             var frequencies = FFT(samples)
             for(var i = 0; i < frequencies.length; i++) {
                 console.log(frequencies)
+                var currentFreq = frequencies[i]
+                epicycles[i] = new epicycle(currentFreq.mod,i,currentFreq.arg);
             }
+            //#endregion
         }
         else { //Continuing with the tracing
             samples.push(mousePos);
@@ -124,7 +129,7 @@ function mainLoop() {
 
     //#endregion
 
-    //#region draw trace
+    //#region Draw Trace
 
     for(var i = 0; i < samples.length; i++) {
         ctx.beginPath();
@@ -133,6 +138,12 @@ function mainLoop() {
         ctx.arc(samples[i][0],samples[i][1],2,0,Math.PI * 2)
         ctx.stroke();
     }
+
+    //#endregion
+
+    //#region Draw Epicycles
+
+    //not done yet lol
 
     //#endregion
 
