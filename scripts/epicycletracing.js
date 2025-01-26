@@ -118,6 +118,7 @@ function mainLoop() {
                 var currentFreq = frequencies[i]
                 epicycles[i] = new epicycle(currentFreq.mod,i,currentFreq.arg);
             }
+            console.log(epicycles)
             //#endregion
         }
         else { //Continuing with the tracing
@@ -141,6 +142,7 @@ function mainLoop() {
     //#endregion
 
     //#region Draw Epicycles
+
     var currentPos = [0,0];
     var epicyclePos = [];
     for(var i = 0; i < epicycles.length; i++) {
@@ -150,6 +152,7 @@ function mainLoop() {
         ctx.lineTo(currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1])
         ctx.stroke();
         currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
+        console.log(currentPos)
     }
 
     //not done yet lol
