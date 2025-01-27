@@ -124,9 +124,10 @@ function mainLoop() {
             var frequenciesX = FFT(samplesX)
             var frequenciesY = FFT(samplesY)
             for(var i = 0; i < newSampleLen.length; i++) {
+                
                 var epicycleX = new epicycle(frequenciesX[i].mod, i, frequenciesX[i].arg);
                 var epicycleY = new epicycle(frequenciesY[i].mod, i, frequenciesY[i].arg);
-                
+
                 epicycles.push(epicycleX);
                 epicycles.push(epicycleY);
             }
