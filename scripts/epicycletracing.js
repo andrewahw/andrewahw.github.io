@@ -46,12 +46,14 @@ function epicycle(radius,angularVelocity,initialAngle) {
 //#region Simulation specifics
 
 //Things to do with recording the actual sample
-var samples = [];
+var samplesX = [];
+var samplesY = [];
 var prevSample = [];
 var tracing = false;
 
 //Things to do with resampling to powers of 2
-var newSamples = [];
+var newSamplesX = [];
+var newSamplesY = [];
 var newSampleLen = [];
 var lerpFactor = [];
 
@@ -68,7 +70,8 @@ function mainLoop() {
 
     if(mouseDown == true && prevMouseDown == false) { //Check to initiate tracing
         tracing = true;
-        samples = []
+        samplesX = [];
+        samplesY = [];
     }
     if(tracing) {
         if(mouseDown == false) { //Checking if tracing has finished
@@ -76,67 +79,73 @@ function mainLoop() {
             //#region Interpolating between start and end points
             tracing = false;
             var avgDis = 0;
-            for(var i = 1; i < samples.length; i++) { //Calculate average distance between samples
-                avgDis += Math.sqrt(Math.pow(samples[i - 1][0] - samples[i][0],2) + 
-                Math.pow(samples[i - 1][1] - samples[i][1],2)) / samples.length;
+            for(var i = 1; i < samplesX.length; i++) { //Calculate average distance between samples
+                avgDis += Math.sqrt(Math.pow(samplesX[i - 1] - samplesX[i],2) + 
+                Math.pow(samplesY[i - 1] - samplesY,2)) / samplesX.length;
             }
-            var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samples[0][0],2) + 
-                            Math.pow(prevSample[1] - samples[0][1],2)); //Pythagoras to calculate distance between start and end
+            var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samplesX[0],2) + 
+                            Math.pow(prevSample[1] - samplesY[0],2)); //Pythagoras to calculate distance between start and end
             var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 2) //Calculate number of extra samples to add
             for(var i = 1; i <= numOfExtraSamples; i++) { //Add sampes by interpolating between start and end points
-                samples.push([
-                    prevSample[0] + (i / numOfExtraSamples) * (samples[0][0] - prevSample[0]),
-                    prevSample[1] + (i / numOfExtraSamples) * (samples[0][1] - prevSample[1]),
-                ])
+                samplesX.push(prevSample[0] + (i / numOfExtraSamples) * (samplesX[0] - prevSample[0]))
+                samplesY.push(prevSample[1] + (i / numOfExtraSamples) * (samplesY[0] - prevSample[1]))
             }
             //#endregion
         
             //#region Reconfigure samples to powers of 2
-            newSamples = [];
-            newSampleLen = Math.pow(2, Math.ceil(Math.log2(samples.length)));
+            newSamplesX = [];
+            newSamplesY = [];
+            newSampleLen = Math.pow(2, Math.ceil(Math.log2(samplesX.length)));
             lerpFactor = [];
             
             for(var i = 0; i < newSampleLen; i++) {
                 lerpFactor = [
-                    Math.floor(i * samples.length / newSampleLen),
-                    (i * samples.length / newSampleLen) % 1
+                    Math.floor(i * samplesX.length / newSampleLen),
+                    (i * samplesX.length / newSampleLen) % 1
                 ] //Gets int and decimal part of sample percentage mapped to sampleLen
-                samples.push(samples[samples.length - 1]); //Need to pad out the end
-                newSamples.push([
-                    samples[lerpFactor[0]][0] + lerpFactor[1] * (samples[lerpFactor[0] + 1][0] - samples[lerpFactor[0]][0]),
-                    samples[lerpFactor[0]][1] + lerpFactor[1] * (samples[lerpFactor[0] + 1][1] - samples[lerpFactor[0]][1])
-                ])
-                samples.pop(); //Un-pad out the end (kinda stupid fix)
+
+                samplesX.push(samplesX[samplesX.length - 1]); //Need to pad out the end
+                samplesY.push(samplesY[samplesY.length - 1]);
+
+                newSamplesX.push(samplesX[lerpFactor[0]] + lerpFactor[1] * (samplesX[lerpFactor[0] + 1] - samplesX[lerpFactor[0]]))
+                newSamplesY.push(samplesY[lerpFactor[0]] + lerpFactor[1] * (samplesY[lerpFactor[0] + 1] - samplesY[lerpFactor[0]]))
+
+                samplesX.pop(); //Un-pad out the end (kinda stupid fix)
+                samplesY.pop();
             }
-            samples = newSamples
+            samplesX = newSamplesX;
+            samplesY = newSamplesY;
             //#endregion
 
             //#region FFT it up (and create set of epicycles)
             epicycles = [];
-            var frequencies = FFT(samples)
-            for(var i = 0; i < frequencies.length; i++) {
-                var currentFreq = frequencies[i]
-                epicycles[i] = new epicycle(currentFreq.mod,i,currentFreq.arg);
+            var frequenciesX = FFT(samplesX)
+            var frequenciesY = FFT(samplesY)
+            for(var i = 0; i < newSampleLen.length; i++) {
+                epicycles.push(new epicycle(frequenciesX[i].mod,i,frequenciesX[i].arg));
+                epicycles.push(new epicycle(frequenciesY[i].mod,i,frequenciesY[i].arg));
             }
-            console.log(frequencies)
+            console.log(frequenciesX)
+            console.log(frequenciesY)
             console.log(epicycles)
             //#endregion
         }
         else { //Continuing with the tracing
-            samples.push(mousePos);
+            samplesX.push(mousePos[0]);
+            samplesY.push(mousePos[1]);
         }
-        prevSample = samples[samples.length - 1];
+        prevSample = [samplesX[samplesX.length - 1], samplesY[samplesX.length - 1]];
     }
 
     //#endregion
 
     //#region Draw Trace
 
-    for(var i = 0; i < samples.length; i++) {
+    for(var i = 0; i < samplesX.length; i++) {
         ctx.beginPath();
-        //ctx.moveTo(samples[i][0],samples[i][1]);
+        //ctx.moveTo(samplesX[i],samplesY[i]);
         //ctx.lineTo(samples[i + 1][0], samples[i + 1][1])
-        ctx.arc(samples[i][0],samples[i][1],2,0,Math.PI * 2)
+        ctx.arc(samplesX[i],samplesY[i],2,0,Math.PI * 2)
         ctx.stroke();
     }
 
