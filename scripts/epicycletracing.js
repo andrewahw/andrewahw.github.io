@@ -83,9 +83,11 @@ function mainLoop() {
                 avgDis += Math.sqrt(Math.pow(samplesX[i - 1] - samplesX[i],2) + 
                 Math.pow(samplesY[i - 1] - samplesY,2)) / samplesX.length;
             }
+
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samplesX[0],2) + 
                             Math.pow(prevSample[1] - samplesY[0],2)); //Pythagoras to calculate distance between start and end
             var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 2) //Calculate number of extra samples to add
+
             for(var i = 1; i <= numOfExtraSamples; i++) { //Add sampes by interpolating between start and end points
                 samplesX.push(prevSample[0] + (i / numOfExtraSamples) * (samplesX[0] - prevSample[0]))
                 samplesY.push(prevSample[1] + (i / numOfExtraSamples) * (samplesY[0] - prevSample[1]))
@@ -134,7 +136,7 @@ function mainLoop() {
             samplesX.push(mousePos[0]);
             samplesY.push(mousePos[1]);
         }
-        prevSample = [samplesX[samplesX.length - 1], samplesY[samplesX.length - 1]];
+        prevSample = [samplesX[samplesX.length - 1], samplesY[samplesY.length - 1]];
     }
 
     //#endregion
