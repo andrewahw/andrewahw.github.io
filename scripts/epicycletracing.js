@@ -81,7 +81,7 @@ function mainLoop() {
             var avgDis = 0;
             for(var i = 1; i < samplesX.length; i++) { //Calculate average distance between samples
                 avgDis += Math.sqrt(Math.pow(samplesX[i - 1] - samplesX[i],2) + 
-                Math.pow(samplesY[i - 1] - samplesY,2)) / samplesX.length;
+                Math.pow(samplesY[i - 1] - samplesY[i],2)) / samplesX.length;
             }
 
             var startEndDis = Math.sqrt(Math.pow(prevSample[0] - samplesX[0],2) + 
