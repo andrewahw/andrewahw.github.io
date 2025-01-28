@@ -158,7 +158,7 @@ function mainLoop() {
 
     var currentPos = [0,0];
     var epicyclePos = [];
-    for(var i = 0; i < epicycles.length; i++) {
+    for(var i = 0; i < epicycles.length / 2; i++) {
         epicyclePos = epicycles[i].getPosition(0.1); //Get position of current epicycle
         ctx.beginPath();
         ctx.moveTo(currentPos[0], currentPos[1]);
