@@ -128,7 +128,12 @@ function mainLoop() {
                 epicycles.push(new epicycle(frequenciesX[i].mod / newSampleLen, i, frequenciesX[i].arg));
                 epicycles.push(new epicycle(frequenciesY[i].mod / newSampleLen, i, frequenciesY[i].arg));
             }
+            console.log(samplesX)
+            console.log(inverseFFT(frequenciesX))
             console.log(frequenciesX)
+
+            console.log(samplesY)
+            console.log(inverseFFT(frequenciesY))
             console.log(frequenciesY)
             console.log(epicycles)
             //#endregion
@@ -158,14 +163,14 @@ function mainLoop() {
 
     var currentPos = [0,0];
     var epicyclePos = [];
-    for(var i = 0; i < epicycles.length / 2; i++) {
+    for(var i = 0; i < epicycles.length; i++) {
         epicyclePos = epicycles[i].getPosition(0.1); //Get position of current epicycle
         ctx.beginPath();
         ctx.moveTo(currentPos[0], currentPos[1]);
         ctx.lineTo(currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1])
         ctx.stroke();
         currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
-        if(i == epicycles.length - 1) {console.log(currentPos)}
+        //if(i == epicycles.length - 1) {console.log(currentPos)}
     }
 
     //not fully done yet lol
