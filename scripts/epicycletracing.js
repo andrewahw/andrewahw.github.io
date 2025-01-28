@@ -87,8 +87,8 @@ function mainLoop() {
 
             for(var i = 1; i <= numOfExtraSamples; i++) { //Add sampes by interpolating between start and end points
                 samples.push(new complex(
-                    [prevSample[0] + (i / numOfExtraSamples) * (samplesX[0] - prevSample[0]),
-                    prevSample[1] + (i / numOfExtraSamples) * (samplesY[0] - prevSample[1])],
+                    [prevSample[0] + (i / numOfExtraSamples) * (samples[0].re - prevSample[0]),
+                    prevSample[1] + (i / numOfExtraSamples) * (samples[0].im - prevSample[1])],
                  -1))
             }
             //#endregion
@@ -104,7 +104,7 @@ function mainLoop() {
                     (i * samples.length / newSampleLen) % 1
                 ] //Gets int and decimal part of sample percentage mapped to sampleLen
 
-                samples.push(samples[samplesX.length - 1]); //Need to pad out the end
+                samples.push(samples[samples.length - 1]); //Need to pad out the end
 
                 newSamples.push(new complex(
                     [samples[lerpFactor[0]].re + lerpFactor[1] * (samples[lerpFactor[0] + 1].re - samples[lerpFactor[0]].re),
