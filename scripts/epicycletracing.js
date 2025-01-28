@@ -165,7 +165,7 @@ function mainLoop() {
         ctx.lineTo(currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1])
         ctx.stroke();
         currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
-        //console.log(currentPos)
+        if(i == epicycles.length - 1) {console.log(currentPos)}
     }
 
     //not fully done yet lol
