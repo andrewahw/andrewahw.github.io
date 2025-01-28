@@ -10,7 +10,7 @@ canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
 //Import relevant functions/constants/classes
-import { cornerRadius, button, drawBackground, complex, FFT, inverseFFT} from "./utils.js";
+import { cornerRadius, button, drawBackground, complex, FFT, inverseFFT, DFT} from "./utils.js";
 
 //Set up mouse variables
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
@@ -121,8 +121,8 @@ function mainLoop() {
 
             //#region FFT it up (and create set of epicycles)
             epicycles = [];
-            var frequenciesX = FFT(samplesX)
-            var frequenciesY = FFT(samplesY)
+            var frequenciesX = DFT(samplesX)
+            var frequenciesY = DFT(samplesY)
 
             for(var i = 0; i < newSampleLen; i++) { //Why isn't this woorking
                 epicycles.push(new epicycle(frequenciesX[i].mod, i, frequenciesX[i].arg));
