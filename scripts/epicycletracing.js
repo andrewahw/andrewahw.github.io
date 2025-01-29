@@ -84,6 +84,7 @@ function mainLoop() {
             var startEndDis = Math.sqrt(Math.pow(prevSample.re - samples[0].re,2) + 
                             Math.pow(prevSample.im - samples[0].im,2)); //Pythagoras to calculate distance between start and end
             var numOfExtraSamples = Math.max(Math.floor(startEndDis / avgDis) - 1, 2) //Calculate number of extra samples to add
+            console.log(numOfExtraSamples);
 
             for(var i = 1; i <= numOfExtraSamples; i++) { //Add sampes by interpolating between start and end points
                 samples.push(new complex(
