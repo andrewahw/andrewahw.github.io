@@ -10,7 +10,9 @@ canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
 //Import relevant functions/constants/classes
-import { cornerRadius, button, drawBackground, complex, FFT, inverseFFT, DFT, complexFFT} from "./utils.js";
+import { cornerRadius, button, drawBackground, complex, complexFFT, dftTestInputs} from "./utils.js";
+
+console.log(complexFFT(dftTestInputs[3]))
 
 //Set up mouse variables
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
