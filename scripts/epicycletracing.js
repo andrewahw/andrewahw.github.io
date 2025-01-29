@@ -121,8 +121,9 @@ function mainLoop() {
             var frequencies = complexFFT(samples)
 
             for(var i = 0; i < newSampleLen; i++) { //Why isn't this woorking
-                epicycles.push(new epicycle(frequencies[i].mod / newSampleLen, i, frequencies[i].arg));
+                epicycles.push(new epicycle(frequencies[i].mod, i, frequencies[i].arg));
             }
+            console.log(epicycles)
             //#endregion
         }
         else { //Continuing with the tracing
