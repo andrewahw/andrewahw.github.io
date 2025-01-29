@@ -12,8 +12,6 @@ canvas.height = simulationDiv.clientHeight;
 //Import relevant functions/constants/classes
 import { cornerRadius, button, drawBackground, complex, complexFFT, dftTestInputs} from "./utils.js";
 
-console.log(complexFFT(dftTestInputs[3]))
-
 //Set up mouse variables
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
 var mouseStartPos = [-1,-1]; // updates when mouse pressed, resets when mouse released
@@ -125,6 +123,8 @@ function mainLoop() {
             for(var i = 0; i < newSampleLen; i++) { //Why isn't this woorking
                 epicycles.push(new epicycle(frequencies[i].mod, i, frequencies[i].arg));
             }
+            console.log(samples)
+            console.log(frequencies)
             console.log(epicycles)
             //#endregion
         }
