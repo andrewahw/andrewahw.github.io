@@ -10,7 +10,7 @@ canvas.width = simulationDiv.clientWidth;
 canvas.height = simulationDiv.clientHeight;
 
 //Import relevant functions/constants/classes
-import { cornerRadius, button, drawBackground, complex, FFT, inverseFFT, DFT} from "./utils.js";
+import { cornerRadius, button, drawBackground, complex, FFT, inverseFFT, DFT, complexFFT} from "./utils.js";
 
 //Set up mouse variables
 var mousePos = [-1,-1]; //-1 -1 is when mouse is not over the simulation
@@ -117,14 +117,12 @@ function mainLoop() {
             //#endregion
 
             //#region FFT it up (and create set of epicycles)
-            /*epicycles = [];
-            var frequenciesX = FFT(samplesX)
-            var frequenciesY = FFT(samplesY)
+            epicycles = [];
+            var frequencies = complexFFT(samples)
 
             for(var i = 0; i < newSampleLen; i++) { //Why isn't this woorking
-                epicycles.push(new epicycle(frequenciesX[i].mod / newSampleLen, i, frequenciesX[i].arg));
-                epicycles.push(new epicycle(frequenciesY[i].mod / newSampleLen, i, frequenciesY[i].arg));
-            }*/
+                epicycles.push(new epicycle(frequencies[i].mod / newSampleLen, i, frequencies[i].arg));
+            }
             //#endregion
         }
         else { //Continuing with the tracing
