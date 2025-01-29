@@ -328,8 +328,8 @@ export function complexFFT(samples, inverse = false) { //The actual FFT
         }
 
         //Recursive step
-        var evenFreq = FFT(evenSamples, inverse)
-        var oddFreq = FFT(oddSamples, inverse)
+        var evenFreq = complexFFT(evenSamples, inverse)
+        var oddFreq = complexFFT(oddSamples, inverse)
 
         for(var i = 0; i < sampleLen/2; i++) {
 
