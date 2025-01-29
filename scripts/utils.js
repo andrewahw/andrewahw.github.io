@@ -220,6 +220,13 @@ export function addComplex(complex1, complex2) {
     )
     return complexResult;
 }
+export function subComplex(complex1, complex2) {
+    var complexResult = new complex(
+        [complex1.re - complex2.re,
+        complex1.im - complex2.im],-1
+    )
+    return complexResult; 
+}
 
 export function DFT(samples) {
     var frequencies = []
@@ -302,6 +309,42 @@ export function inverseFFT(frequencies) { //Inverse FFT is very similar, so this
         samples[i] = unscaled[i].re / unscaled.length
     }
     return samples
+}
+
+export function complexFFT(samples, inverse = false) { //The actual FFT
+
+    var frequencies = [];
+    var sampleLen = samples.length;
+
+    if(sampleLen == 1) {return samples} //Base case
+    else {
+
+        //Splitting into even and odd indexed samples
+        var evenSamples = []
+        var oddSamples = []
+        for(var i = 0; i < sampleLen; i++) {
+            if(i % 2 == 0) {evenSamples[i / 2] = samples[i]}
+            else {oddSamples[(i - 1) / 2] = samples[i]}
+        }
+
+        //Recursive step
+        var evenFreq = FFT(evenSamples, inverse)
+        var oddFreq = FFT(oddSamples, inverse)
+
+        for(var i = 0; i < sampleLen/2; i++) {
+
+            if(inverse == false)
+                {var multiplicand = new complex(-1, [1,2 * Math.PI * i / sampleLen])}
+            else
+                {var multiplicand = new complex(-1, [1 / sampleLen, -2 * Math.PI * i / sampleLen])}
+
+            frequencies[i] = addComplex(evenFreq[i], multComplex(multiplicand,oddFreq[i]))
+            frequencies[i + sampleLen/2] = subComplex(evenFreq[i], multComplex(multiplicand,oddFreq[i]))
+        }
+        return frequencies
+
+    }
+
 }
 
 export const dftTestInputs = [ //Just for testing
