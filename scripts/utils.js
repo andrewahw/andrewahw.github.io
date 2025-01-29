@@ -182,7 +182,7 @@ export function complex(cartesian, polar) {
     if(polar == -1) {
         this.re = cartesian[0];
         this.im = cartesian[1];
-        this.mod = (this.re * this.re) + (this.im * this.im);
+        this.mod = Math.sqrt((this.re * this.re) + (this.im * this.im));
         this.arg = Math.atan2(this.im, this.re);
     }
     else if(cartesian == -1) {
