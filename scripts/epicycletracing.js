@@ -150,15 +150,17 @@ function mainLoop() {
 
     //#region Draw Epicycles
 
-    var currentPos = epicycles[0].getPosition(0);
-    var epicyclePos = [];
-    for(var i = 1; i < epicycles.length / 2; i++) {
-        epicyclePos = epicycles[i].getPosition(0.05); //Get position of current epicycle
-        ctx.beginPath();
-        ctx.moveTo(currentPos[0], currentPos[1]);
-        currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
-        ctx.moveTo(currentPos[0], currentPos[1]);
-        ctx.stroke();
+    if(epicycles.length > 0) {
+        var currentPos = epicycles[0].getPosition(0);
+        var epicyclePos = [];
+        for(var i = 1; i < epicycles.length / 2; i++) {
+            epicyclePos = epicycles[i].getPosition(0.05); //Get position of current epicycle
+            ctx.beginPath();
+            ctx.moveTo(currentPos[0], currentPos[1]);
+            currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
+            ctx.moveTo(currentPos[0], currentPos[1]);
+            ctx.stroke();
+        }
     }
 
     //not fully done yet lol
