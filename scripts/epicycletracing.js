@@ -126,9 +126,6 @@ function mainLoop() {
                     {epicycles[i].angularVelocity = -newSampleLen + i}
             }
             epicycles.sort((a, b) => b.radius - a.radius) // sort epicycles by radius
-            console.log(samples)
-            console.log(frequencies)
-            console.log(epicycles)
             //#endregion
         }
         else { //Continuing with the tracing
@@ -141,11 +138,11 @@ function mainLoop() {
 
     //#region Draw Trace
 
-    for(var i = 0; i < samples.length; i++) {
+    for(var i = 0; i < samples.length - 1; i++) {
         ctx.beginPath();
-        //ctx.moveTo(samplesX[i],samplesY[i]);
-        //ctx.lineTo(samples[i + 1][0], samples[i + 1][1])
-        ctx.arc(samples[i].re,samples[i].im,2,0,Math.PI * 2)
+        ctx.moveTo(samples[i].re,samples[i].im);
+        ctx.lineTo(samples[i + 1].re, samples[i + 1].im)
+        //ctx.arc(samples[i].re,samples[i].im,2,0,Math.PI * 2)
         ctx.stroke();
     }
 
@@ -158,16 +155,18 @@ function mainLoop() {
         var epicyclePos = [];
         for(var i = 1; i < epicycles.length; i++) {
             epicyclePos = epicycles[i].getPosition(0.025); //Get position of current epicycle
-            ctx.beginPath();
+
+            ctx.beginPath(); //Draw disc around epicycle
+            ctx.arc(currentPos[0],currentPos[1],epicycles[i].radius,0,Math.PI * 2);
+            ctx.stroke();
+
+            ctx.beginPath(); //Draw connecting line
             ctx.moveTo(currentPos[0], currentPos[1]);
             currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
             ctx.lineTo(currentPos[0], currentPos[1]);
             ctx.stroke();
         }
         console.log(currentPos)
-        ctx.beginPath();
-        ctx.arc(currentPos[0],currentPos[1],5,0,Math.PI * 2);
-        ctx.stroke();
     }
 
     //not fully done yet lol
