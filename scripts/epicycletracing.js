@@ -122,7 +122,7 @@ function mainLoop() {
 
             for(var i = 0; i < newSampleLen; i++) {
                 epicycles.push(new epicycle(frequencies[i].mod / newSampleLen, i, frequencies[i].arg));
-                if(i > newSampleLen / 2)
+                if(i > (newSampleLen / 2))
                     {epicycles[i - 1].angularVelocity = -newSampleLen + i}
             }
             epicycles.sort((a, b) => b.radius - a.radius) // sort epicycles by radius
