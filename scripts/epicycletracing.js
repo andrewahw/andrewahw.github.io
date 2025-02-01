@@ -158,14 +158,14 @@ function mainLoop() {
         for(var i = 1; i < epicycles.length; i++) {
             epicyclePos = epicycles[i].getPosition(0.01); //Get position of current epicycle
 
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = "rgba(250, 218, 122, 0.6)"
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "rgba(250, 218, 122, 0.8)"
             ctx.beginPath(); //Draw disc around epicycle
             ctx.arc(currentPos[0],currentPos[1],epicycles[i].radius,0,Math.PI * 2);
             ctx.stroke();
 
-            ctx.lineWidth = 5;
-            ctx.strokeStyle = "rgba(31, 80, 154, 0.9)"
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "rgba(31, 80, 154, 0.7)"
             ctx.beginPath(); //Draw connecting line
             ctx.moveTo(currentPos[0], currentPos[1]);
             currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
