@@ -153,7 +153,7 @@ function mainLoop() {
     if(epicycles.length > 0) {
         var currentPos = epicycles[0].getPosition(0);
         var epicyclePos = [];
-        for(var i = 1; i < epicycles.length / 2; i++) {
+        for(var i = 1; i < epicycles.length; i++) {
             epicyclePos = epicycles[i].getPosition(0.05); //Get position of current epicycle
             ctx.beginPath();
             ctx.moveTo(currentPos[0], currentPos[1]);
@@ -162,6 +162,9 @@ function mainLoop() {
             ctx.stroke();
         }
         console.log(currentPos)
+        ctx.beginPath();
+        ctx.arc(currentPos[0],currentPos[1],5,0,Math.PI * 2);
+        ctx.stroke();
     }
 
     //not fully done yet lol
