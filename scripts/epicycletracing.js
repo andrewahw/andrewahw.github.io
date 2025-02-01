@@ -161,6 +161,7 @@ function mainLoop() {
             ctx.moveTo(currentPos[0], currentPos[1]);
             ctx.stroke();
         }
+        console.log(currentPos)
     }
 
     //not fully done yet lol
