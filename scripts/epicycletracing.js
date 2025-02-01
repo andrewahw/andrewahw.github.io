@@ -155,10 +155,10 @@ function mainLoop() {
     for(var i = 0; i < epicycles.length / 2; i++) {
         epicyclePos = epicycles[i].getPosition(0.05); //Get position of current epicycle
         ctx.beginPath();
-        ctx.moveTo(currentPos[0], currentPos[1]);
-        ctx.lineTo(currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1])
+        ctx.moveTo(currentPos[1], currentPos[0]);
+        currentPos = [currentPos[1] + epicyclePos[1], currentPos[0] + epicyclePos[0]]; //Update current position
+        ctx.moveTo(currentPos[1], currentPos[0]);
         ctx.stroke();
-        currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
         if(i == epicycles.length - 1) {console.log(currentPos)}
     }
 
