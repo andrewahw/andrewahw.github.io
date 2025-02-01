@@ -138,6 +138,8 @@ function mainLoop() {
 
     //#region Draw Trace
 
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "rgba(31, 80, 154, 0.9)"
     for(var i = 0; i < samples.length - 1; i++) {
         ctx.beginPath();
         ctx.moveTo(samples[i].re,samples[i].im);
@@ -154,12 +156,16 @@ function mainLoop() {
         var currentPos = epicycles[0].getPosition(0);
         var epicyclePos = [];
         for(var i = 1; i < epicycles.length; i++) {
-            epicyclePos = epicycles[i].getPosition(0.025); //Get position of current epicycle
+            epicyclePos = epicycles[i].getPosition(0.01); //Get position of current epicycle
 
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "rgba(250, 218, 122, 0.6)"
             ctx.beginPath(); //Draw disc around epicycle
             ctx.arc(currentPos[0],currentPos[1],epicycles[i].radius,0,Math.PI * 2);
             ctx.stroke();
 
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = "rgba(31, 80, 154, 0.9)"
             ctx.beginPath(); //Draw connecting line
             ctx.moveTo(currentPos[0], currentPos[1]);
             currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
