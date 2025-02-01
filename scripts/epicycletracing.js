@@ -121,11 +121,9 @@ function mainLoop() {
             var frequencies = complexFFT(samples)
 
             for(var i = 0; i < newSampleLen; i++) {
-                if(i < newSampleLen / 2)
-                    {epicycles.push(new epicycle(frequencies[i].mod / newSampleLen, i, frequencies[i].arg));}
-                else
-                    {{epicycles.push(new epicycle(frequencies[i].mod / newSampleLen, -1 * (i - newSampleLen/2), frequencies[i].arg));}}
+                epicycles.push(new epicycle(frequencies[i].mod / newSampleLen, i, frequencies[i].arg));
             }
+            epicycles.sort((a, b) => a.radius - b.radius) // sort epicycles by radius
             console.log(samples)
             console.log(frequencies)
             console.log(epicycles)
