@@ -159,7 +159,7 @@ function mainLoop() {
         for(var i = 1; i < epicycles.length; i++) {
             epicyclePos = epicycles[i].getPosition(0.01); //Get position of current epicycle
 
-            if(i < epicycles.length * 0.7) { //Draw disc around epicycle
+            if(i < epicycles.radius < 10) { //Draw disc around epicycle
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = "rgba(252, 201, 48, 0.5)"
                 ctx.beginPath(); 
