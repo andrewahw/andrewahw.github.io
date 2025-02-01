@@ -159,13 +159,15 @@ function mainLoop() {
         for(var i = 1; i < epicycles.length; i++) {
             epicyclePos = epicycles[i].getPosition(0.01); //Get position of current epicycle
 
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = "rgba(252, 201, 48, 0.5)"
-            ctx.beginPath(); //Draw disc around epicycle
-            ctx.arc(currentPos[0],currentPos[1],epicycles[i].radius,0,Math.PI * 2);
-            ctx.stroke();
+            if(i < epicycles.length * 0.7) { //Draw disc around epicycle
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = "rgba(252, 201, 48, 0.5)"
+                ctx.beginPath(); 
+                ctx.arc(currentPos[0],currentPos[1],epicycles[i].radius,0,Math.PI * 2);
+                ctx.stroke();
+            }
 
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 3;
             ctx.strokeStyle = "rgba(31, 80, 154, 0.6)"
             ctx.beginPath(); //Draw connecting line
             ctx.moveTo(currentPos[0], currentPos[1]);
