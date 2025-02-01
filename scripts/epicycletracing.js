@@ -123,7 +123,7 @@ function mainLoop() {
             for(var i = 0; i < newSampleLen; i++) {
                 epicycles.push(new epicycle(frequencies[i].mod / newSampleLen, i, frequencies[i].arg));
             }
-            epicycles.sort((a, b) => a.radius - b.radius) // sort epicycles by radius
+            epicycles.sort((a, b) => b.radius - a.radius) // sort epicycles by radius
             console.log(samples)
             console.log(frequencies)
             console.log(epicycles)
