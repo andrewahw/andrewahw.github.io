@@ -121,7 +121,7 @@ function mainLoop() {
             var frequencies = complexFFT(samples)
 
             for(var i = 0; i < newSampleLen; i++) { //Why isn't this woorking
-                epicycles.push(new epicycle(frequencies[i].mod, i, frequencies[i].arg));
+                epicycles.push(new epicycle(frequencies[i].mod / newSampleLen, i, frequencies[i].arg));
             }
             console.log(samples)
             console.log(frequencies)
@@ -159,7 +159,7 @@ function mainLoop() {
         ctx.lineTo(currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1])
         ctx.stroke();
         currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
-        //if(i == epicycles.length - 1) {console.log(currentPos)}
+        if(i == epicycles.length - 1) {console.log(currentPos)}
     }
 
     //not fully done yet lol
