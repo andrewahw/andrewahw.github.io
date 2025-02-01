@@ -158,7 +158,7 @@ function mainLoop() {
             ctx.beginPath();
             ctx.moveTo(currentPos[0], currentPos[1]);
             currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
-            ctx.moveTo(currentPos[0], currentPos[1]);
+            ctx.lineTo(currentPos[0], currentPos[1]);
             ctx.stroke();
         }
         console.log(currentPos)
