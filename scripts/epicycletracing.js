@@ -122,6 +122,8 @@ function mainLoop() {
 
             for(var i = 0; i < newSampleLen; i++) {
                 epicycles.push(new epicycle(frequencies[i].mod / newSampleLen, i, frequencies[i].arg));
+                if(i > newSampleLen / 2)
+                    {epicycles[i - 1].angularVelocity = -1 * (i - (newSampleLen / 2))}
             }
             epicycles.sort((a, b) => b.radius - a.radius) // sort epicycles by radius
             console.log(samples)
@@ -155,7 +157,7 @@ function mainLoop() {
         var currentPos = epicycles[0].getPosition(0);
         var epicyclePos = [];
         for(var i = 1; i < epicycles.length; i++) {
-            epicyclePos = epicycles[i].getPosition(0.05); //Get position of current epicycle
+            epicyclePos = epicycles[i].getPosition(0.025); //Get position of current epicycle
             ctx.beginPath();
             ctx.moveTo(currentPos[0], currentPos[1]);
             currentPos = [currentPos[0] + epicyclePos[0], currentPos[1] + epicyclePos[1]]; //Update current position
