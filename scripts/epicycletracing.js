@@ -161,7 +161,7 @@ function mainLoop() {
 
             //Draw disc around epicycle
             if(epicycles[i].radius > 5) {
-                ctx.lineWidth = 5 * (1 - (i / epicycles.length));
+                ctx.lineWidth = 5 * (epicycles[i].radius / epicycles[1].radius);
                 ctx.strokeStyle = "rgba(255, 194, 12, 0.5)"
                 ctx.beginPath(); 
                 ctx.arc(currentPos[0],currentPos[1],epicycles[i].radius,0,Math.PI * 2);
