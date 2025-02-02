@@ -160,11 +160,13 @@ function mainLoop() {
             epicyclePos = epicycles[i].getPosition(0.01); //Get position of current epicycle
 
             //Draw disc around epicycle
-            ctx.lineWidth = 5 * (1 - (i / epicycles.length));
-            ctx.strokeStyle = "rgba(255, 194, 12, 0.8)"
-            ctx.beginPath(); 
-            ctx.arc(currentPos[0],currentPos[1],epicycles[i].radius,0,Math.PI * 2);
-            ctx.stroke();
+            if(epicycle[i].radius > 5) {
+                ctx.lineWidth = 5 * (1 - (i / epicycles.length));
+                ctx.strokeStyle = "rgba(255, 194, 12, 0.5)"
+                ctx.beginPath(); 
+                ctx.arc(currentPos[0],currentPos[1],epicycles[i].radius,0,Math.PI * 2);
+                ctx.stroke();
+            }
 
             ctx.lineWidth = 3;
             ctx.strokeStyle = "rgba(31, 80, 154, 0.8)"
