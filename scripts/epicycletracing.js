@@ -160,9 +160,9 @@ function mainLoop() {
             epicyclePos = epicycles[i].getPosition(0.01); //Get position of current epicycle
 
             //Draw disc around epicycle
-            if(epicycles[i].radius > 5) {
+            if(epicycles[i].radius > 3) {
                 ctx.lineWidth = (6 * (epicycles[i].radius / epicycles[1].radius)) + 2;
-                ctx.strokeStyle = "rgba(255, 194, 12, 0.4)"
+                ctx.strokeStyle = "rgba(255, 194, 12, 0.5)"
                 ctx.beginPath(); 
                 ctx.arc(currentPos[0],currentPos[1],epicycles[i].radius,0,Math.PI * 2);
                 ctx.stroke();
