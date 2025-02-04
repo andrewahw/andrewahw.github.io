@@ -21,11 +21,35 @@
           Using this understanding, here are some examples of how it can be used.</p>
         </p>
         <details>
-          <summary class = "collapsibleTitle">Audio Uses</summary> <!--Collapsible-->
+          <summary class = "collapsibleTitle">Audio Applications</summary> <!--Collapsible-->
           <div class = "collapsibleContent">
-            <p>For audio applications, we can </p>
+            <p>For audio, we can imagine our time domain representing the amplitude ("level") of the sound over time.
+              So by transforming this time domain into a frequency domain, we can manipulate it in various ways:
+            </p>
+            <p>[Image of equaliser here maybe]</p>
+            <ul>
+              <li><b>Equalisers:</b> An equaliser allows for certain frequencies to be amplified or suppressed by directly editing the frequency domain of the sound.</li>
+              <li><b>Background Noise Removal:</b> By removing specific frequencies, background noises such as hissing or white noise.</li>
+              <li><b>Pitch Detection/Shifting:</b> The pitch of a sound can be easily identified from its frequency domain.
+                 This can also be used to change the pitch by shifting the entire frequency domain</li>
+            </ul>
           </div>
-        </details> 
+        </details>
+        <details>
+          <summary class = "collapsibleTitle">Image Applications</summary> <!--Collapsible-->
+          <div class = "collapsibleContent">
+            <p>With images, we can separate the image into different channels (e.g. colour channels), then apply a Fourier transform to each channel.
+              Manipulating these can give some interesting uses:
+            </p>
+            <p>[maybe an image demonstrating some filtering]</p>
+            <ul>
+              <li><b>Image Editing:</b> Changing the frequency domain of an image can change the contrast, or remove detail. [!!!]</li>
+              <li><b>Edge detection:</b> Applying a high-pass filter (removing low frequencies) can highlight the edges in an image</li>
+              <li><b>Compression:</b> By encoding an image with its frequency domain, images can be compressed by removing the high frequencies.
+              JPEG compression is the prime example of this, although it uses the Discrete Cosine Transform instead.</li>
+            </ul>
+          </div>
+        </details>
       </div>
 
       <div id = "simulation"> <!--Simulation-->
