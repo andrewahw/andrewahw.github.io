@@ -48,13 +48,30 @@
                Here, the blue is the "edges" while the red is the entire square wave.
             </i></p>
             <ul>
-              <li><b>Image Editing:</b> Changing the frequency domain of an image can change the contrast, or remove detail. [!!!]</li>
+              <li><b>Image Editing:</b> Changing the frequency domain of an image can change the contrast, or remove detail.</li>
               <li><b>Edge detection:</b> Applying a high-pass filter (removing low frequencies) can highlight the edges in an image</li>
               <li><b>Compression:</b> By encoding an image with its frequency domain, images can be compressed by removing the high frequencies.
               JPEG compression is the prime example of this, although it uses the Discrete Cosine Transform instead.</li>
             </ul>
           </div>
         </details>
+
+        <p>Given these real world applications, how does the simulation on the right relate to all of this?
+           This simulation is designed to show how image compression can use Fourier (or other) Transforms, and also some of the artefacts you get from compression.
+        </p>
+        <p>To understand how this works, let's consider a sample 4x4 grid, with a random number from 1-10 in each cell.
+          First, we can turn this into an array of these same values by reading it like so:
+        </p>
+        <!--Image of sample chunk below, also getting tranformed into-->
+        <p>Then, by using a Fourier Transform, we can extract the freqency domain from these values.
+          This gives us 16 frequencies that can perfectly recreate our samples.
+        </p>
+        <p>However, we don't need a <i>perfect</i> reprentation (especially for larger chunks), so what we do is discard some of the higher frequencies.
+          When done right, this means we store less data overall, compressing our file.
+        </p>
+        <!--Image of samples as a graph before and after our compression-->
+        <p>Now, feel free to play around with this simulation to see it working with actual images!</p>
+
       </div>
 
       <div id = "simulation"> <!--Simulation-->
