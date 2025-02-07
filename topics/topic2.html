@@ -62,14 +62,14 @@
         <p>To understand how this works, let's consider a sample 4x4 grid, with a random number from 1-10 in each cell.
           First, we can <b>turn this into an array of these same values</b> by reading it like so:
         </p>
-        <!--Image of sample chunk below, also getting tranformed into-->
+        <img src="../images/samples 4x4.png" style="width:80%; height:30%; border-radius:10px;border:4px solid #1f509a1f;margin: auto; display: block;">
         <p>Then, by using a Fourier Transform, we can extract the freqency domain from these values.
           This gives us <b>16 frequencies that can perfectly recreate our samples.</b>
         </p>
         <p>However, we don't need a <i>perfect</i> reprentation (especially for larger chunks), so what we do is <b>discard some of the higher frequencies.</b>
           When done right, this means <b>we store less data overall</b>, compressing our file.
         </p>
-        <!--Image of samples as a graph before and after our compression-->
+        <img src="../images/trig lerp example.png" style="width:80%; height:30%; border-radius:10px;border:4px solid #1f509a1f;margin: auto; display: block;">
         <p>Now, feel free to play around with this simulation to see it working with actual images!</p>
 
       </div>
