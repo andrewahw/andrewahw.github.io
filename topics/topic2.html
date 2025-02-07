@@ -23,7 +23,7 @@
         <details>
           <summary class = "collapsibleTitle">Audio Applications</summary> <!--Collapsible-->
           <div class = "collapsibleContent">
-            <p>For audio, we can imagine our time domain representing the amplitude ("level") of the sound over time.
+            <p>For audio, we can imagine our <b>time domain representing the amplitude</b> ("level") of the sound over time.
               So by transforming this time domain into a frequency domain, we can manipulate it in various ways:
             </p>
             <img src="../images/eq diagram.jpg" style="width:80%; height:30%; border-radius:10px;border:4px solid #1f509a1f; margin: auto; display: block;">
@@ -40,7 +40,7 @@
         <details>
           <summary class = "collapsibleTitle">Image Applications</summary> <!--Collapsible-->
           <div class = "collapsibleContent">
-            <p>With images, we can separate the image into different channels (e.g. colour channels), then apply a Fourier transform to each channel.
+            <p>With images, we can separate the image into <b>different channels</b> (e.g. colour channels), then apply a Fourier transform to each channel.
               Manipulating these can give some interesting uses:
             </p>
             <img src="../images/square edge.png" style="width:80%; height:30%; border-radius:10px;border:4px solid #1f509a1f;margin: auto; display: block;">
@@ -57,17 +57,17 @@
         </details>
 
         <p>Given these real world applications, how does the simulation on the right relate to all of this?
-           This simulation is designed to show how image compression can use Fourier (or other) Transforms, and also some of the artefacts you get from compression.
+           This simulation is designed to show how <b>image compression can use Fourier (or other) Transforms</b>, and also some of the artefacts you get from compression.
         </p>
         <p>To understand how this works, let's consider a sample 4x4 grid, with a random number from 1-10 in each cell.
-          First, we can turn this into an array of these same values by reading it like so:
+          First, we can <b>turn this into an array of these same values</b> by reading it like so:
         </p>
         <!--Image of sample chunk below, also getting tranformed into-->
         <p>Then, by using a Fourier Transform, we can extract the freqency domain from these values.
-          This gives us 16 frequencies that can perfectly recreate our samples.
+          This gives us<b>16 frequencies that can perfectly recreate our samples.</b>
         </p>
-        <p>However, we don't need a <i>perfect</i> reprentation (especially for larger chunks), so what we do is discard some of the higher frequencies.
-          When done right, this means we store less data overall, compressing our file.
+        <p>However, we don't need a <i>perfect</i> reprentation (especially for larger chunks), so what we do is <b>discard some of the higher frequencies.</b>
+          When done right, this means <b>we store less data overall</b>, compressing our file.
         </p>
         <!--Image of samples as a graph before and after our compression-->
         <p>Now, feel free to play around with this simulation to see it working with actual images!</p>
