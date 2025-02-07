@@ -26,7 +26,7 @@
             <p>For audio, we can imagine our <b>time domain representing the amplitude</b> ("level") of the sound over time.
               So by transforming this time domain into a frequency domain, we can manipulate it in various ways:
             </p>
-            <img src="../images/eq diagram.jpg" style="width:80%; height:30%; border-radius:10px;border:4px solid #1f509a1f; margin: auto; display: block;">
+            <img src="../images/eq diagram.jpg" style="width:80%; border-radius:10px;border:4px solid #1f509a1f; margin: auto; display: block;">
             <p><i>This equaliser shows frequencies from ~100Hz to 2kHz being amplified above others.</i></p>
             <ul>
               <li><b>Equalisers:</b> An equaliser allows for certain frequencies to be amplified or suppressed by directly editing the frequency domain of the sound.</li>
@@ -43,7 +43,7 @@
             <p>With images, we can separate the image into <b>different channels</b> (e.g. colour channels), then apply a Fourier transform to each channel.
               Manipulating these can give some interesting uses:
             </p>
-            <img src="../images/square edge.png" style="width:80%; height:30%; border-radius:10px;border:4px solid #1f509a1f;margin: auto; display: block;">
+            <img src="../images/square edge.png" style="width:80%; border-radius:10px;border:4px solid #1f509a1f;margin: auto; display: block;">
             <p><i>Although not an image, removing the lower frequencies of a square wave is the same principle as edge detection in images.
                Here, the blue is the "edges" while the red is the entire square wave.
             </i></p>
@@ -62,14 +62,15 @@
         <p>To understand how this works, let's consider a sample 4x4 grid, with a random number from 1-10 in each cell.
           First, we can <b>turn this into an array of these same values</b> by reading it like so:
         </p>
-        <img src="../images/samples 4x4.png" style="width:80%; height:30%; border-radius:10px;border:4px solid #1f509a1f;margin: auto; display: block;">
+        <img src="../images/samples 4x4.png" style="width:80%; border-radius:10px;border:4px solid #1f509a1f;margin: auto; display: block;">
         <p>Then, by using a Fourier Transform, we can extract the freqency domain from these values.
           This gives us <b>16 frequencies that can perfectly recreate our samples.</b>
         </p>
         <p>However, we don't need a <i>perfect</i> reprentation (especially for larger chunks), so what we do is <b>discard some of the higher frequencies.</b>
           When done right, this means <b>we store less data overall</b>, compressing our file.
         </p>
-        <img src="../images/trig lerp example.png" style="width:80%; height:30%; border-radius:10px;border:4px solid #1f509a1f;margin: auto; display: block;">
+        <img src="../images/trig lerp example.png" style="width:80%; border-radius:10px;border:4px solid #1f509a1f;margin: auto; display: block;">
+        <p><i>The image above shows the effect of removing higher frequencies, as the blue line only uses 8 of the 16 frequencies.</i><p>
         <p>Now, feel free to play around with this simulation to see it working with actual images!</p>
 
       </div>
