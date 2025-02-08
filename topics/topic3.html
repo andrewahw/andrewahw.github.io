@@ -55,6 +55,35 @@
           Therefore, by raising ω to some n, we are <b>multiplying the angles of kth point of the "N-polygon" by our n</b>.
         </p>
 
+        <details>
+          <summary class = "collapsibleTitle">So what does it look like in Python?</summary> <!--Collapsible-->
+          <div class = "collapsibleContent">
+            <p>Implementing this in any language is quite easy, especially if there is complex number support.
+              Here is an easy implementation in python:</p>
+              <code><pre>
+import cmath
+
+def DFT(samples):
+    
+    frequencies = []
+    N = len(samples)
+    omega = cmath.exp(-1j * cmath.tau / N)
+    
+    for k in range(N):
+        total = 0
+        for n in range(N):
+            total += samples[n] * (omega ** (k * n))
+        frequencies.append(total)
+
+    return frequencies
+
+frequencies = DFT(samples)
+              </pre></code>
+          </div>
+        </details>
+
+        <br><p>Since the DFT also works with complex-valued samples, play around with the simulation on the right to see it in action!</p>
+
       </div>
 
       <div id = "simulation"> <!--Simulation-->
