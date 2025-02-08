@@ -22,7 +22,7 @@
           To understand it, let's see the mathematical formulation of it:
         </p>
         <!--Image here-->
-        <details>
+        <details> <!--could also introduce complex numbers through polar coordinates, but this seems ok-->
           <summary class = "collapsibleTitle">Some groundwork</summary> <!--Collapsible-->
           <div class = "collapsibleContent">
             <p>To fully understand this formulation, we first must understand complex numbers</p>
@@ -31,14 +31,30 @@
               We express this in the form <i>a + bi</i>, where the "a" represents our x component, and the "b" our y component.
             </p>
             <p>Another way of expressing complex numbers is by it's relation to the origin, 0.
-               Generally we do this in the form <i>r * e^iθ</i>, where "r" is the distance from the origin and "θ" is the angle between the point and the origin in radians.
+               Generally we do this in the form <i>r * e^iθ</i>, where "r" is the distance from the origin (it's modulus)
+               and "θ" is the angle between the point and the origin in radians (it's argument).
             </p>
             <p>(Proving this is quite cool, but is also beyond the scope of this website!)</p>
             <p>Lastly, we can multiply complex numbers by adding their angles and multiplying their distances.</p>
           </div>
-
-          <!--finn's cool note: introduce through polar coordinates, then use complex numbers-->
         </details>
+
+        <!--Image of formula-->
+
+        <p>But what does this mean practically? To understand it, let's break it down.</p>
+        <p>This formula outputs the amplitude and phase (expressed as X(k)) of a sinusoid given a frequency, k.
+          To calculate it, we take each sample x(n), multiply it by it's corresponding ω^n, and add them all together.
+          This gives us a complex number, where the modulus corresponds to its amplitude, and the argument corresponds to its phase.
+        </p>
+        <p>Going a bit deeper, let's take a closer look at ω. Immediately we can see that it is in the form <i>r * e^iθ</i>.
+          This tells us that it has a modulus of 1, and an argument of -2πk/N.
+          To see what this means, let's consider all ω for all integers values of k with an N of 5.
+        </p>
+        <!--Image of argan-->
+        
+        <p>Intuitively, it looks like it forms a pentagon!
+          Therefore, by raising ω to some n, we are multiplying the angles of kth point by our n.
+        </p>
 
       </div>
 
