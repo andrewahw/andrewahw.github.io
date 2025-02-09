@@ -157,7 +157,7 @@ function mainLoop() {
         var currentPos = epicycles[0].getPosition(0);
         var epicyclePos = [];
         for(var i = 1; i < epicycles.length; i++) {
-            epicyclePos = epicycles[i].getPosition(-0.01); //Get position of current epicycle
+            epicyclePos = epicycles[i].getPosition(0.01); //Get position of current epicycle
 
             //Draw disc around epicycle
             if(epicycles[i].radius > 3) {

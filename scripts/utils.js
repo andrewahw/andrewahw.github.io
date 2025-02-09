@@ -334,9 +334,9 @@ export function complexFFT(samples, inverse = false) { //The actual FFT
         for(var i = 0; i < sampleLen/2; i++) {
 
             if(inverse == false)
-                {var multiplicand = new complex(-1, [1,2 * Math.PI * i / sampleLen])}
+                {var multiplicand = new complex(-1, [1,-2 * Math.PI * i / sampleLen])}
             else
-                {var multiplicand = new complex(-1, [1 / sampleLen, -2 * Math.PI * i / sampleLen])}
+                {var multiplicand = new complex(-1, [1 / sampleLen, 2 * Math.PI * i / sampleLen])}
 
             frequencies[i] = addComplex(evenFreq[i], multComplex(multiplicand,oddFreq[i]))
             frequencies[i + sampleLen/2] = subComplex(evenFreq[i], multComplex(multiplicand,oddFreq[i]))
